@@ -23,7 +23,7 @@ export default function Home() {
   const [showProcess, setShowProcess] = useState(false);
 
   const phoneNumber = "+8801985127685"; 
-  const emailAddress = "bhaibhaifood@gmail.com";
+  const emailAddress = "Bhaibhaifoodproducts1990@gmail.com";
   const whatsappLink = `https://wa.me/${phoneNumber.replace('+', '')}`;
   const callLink = `tel:${phoneNumber}`;
 
@@ -128,7 +128,7 @@ export default function Home() {
               </a>
               <div className="flex items-center gap-3 text-gray-600 font-medium">
                 <div className="p-2 bg-white rounded-lg shadow-sm"><MapPin size={16} /></div>
-                Sreepur, Gazipur, Bangladesh
+                Sreepur, Gazipur,Dhaka, Bangladesh
               </div>
             </div>
           </div>
@@ -522,9 +522,9 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
-              { name: "Mehedi Shakib.", role: "Verified Buyer", text: "The best quality puffed rice I've had in years! It stays crispy for an incredibly long time, you can tell it's fresh." },
-              { name: "Riyad Hasan.", role: "Regular Customer", text: "Their Red Chira is incredibly authentic. It tastes just like how it was made in our village decades ago." },
-              { name: "Tanmoy Sheikh.", role: "Happy Client", text: "Excellent packaging and very affordable since it's directly from the factory. A permanent addition to our breakfast routine." }
+              { name: "Abdur Razzak.", role: "Verified Buyer", text: "The best quality puffed rice I've had in years! It stays crispy for an incredibly long time, you can tell it's fresh." },
+              { name: "Samsul Alom.", role: "Regular Customer", text: "Their Red Chira is incredibly authentic. It tastes just like how it was made in our village decades ago." },
+              { name: "Kalam Sheikh.", role: "Happy Client", text: "Excellent packaging and very affordable since it's directly from the factory. A permanent addition to our breakfast routine." }
             ].map((review, index) => (
               <motion.div 
                 key={index}
@@ -657,10 +657,10 @@ export default function Home() {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       
       {[
-        { label: "Skilled Workers", value: "35+", icon: "👥", bgColor: "bg-emerald-50", iconBg: "bg-emerald-500", textColor: "text-emerald-900" },
-        { label: "Delivery Vehicles", value: "4+", icon: "🚚", bgColor: "bg-orange-50", iconBg: "bg-orange-500", textColor: "text-orange-900" },
-        { label: "Expert Drivers", value: "4+", icon: "👨‍✈️", bgColor: "bg-sky-50", iconBg: "bg-sky-500", textColor: "text-sky-900" },
-        { label: "Modern Machines", value: "3+", icon: "⚙️", bgColor: "bg-purple-50", iconBg: "bg-purple-500", textColor: "text-purple-900" }
+        { label: "Skilled Workers", value: "100+", icon: "👥", bgColor: "bg-emerald-50", iconBg: "bg-emerald-500", textColor: "text-emerald-900" },
+        { label: "Delivery Vehicles", value: "10", icon: "🚚", bgColor: "bg-orange-50", iconBg: "bg-orange-500", textColor: "text-orange-900" },
+        { label: "Expert Drivers", value: "10", icon: "👨‍✈️", bgColor: "bg-sky-50", iconBg: "bg-sky-500", textColor: "text-sky-900" },
+        { label: "Modern Machines", value: "20", icon: "⚙️", bgColor: "bg-purple-50", iconBg: "bg-purple-500", textColor: "text-purple-900" }
       ].map((stat, i) => (
         <motion.div
           key={i}
