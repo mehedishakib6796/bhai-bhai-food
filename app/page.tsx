@@ -56,28 +56,87 @@ export default function Home() {
     <div className="relative min-h-screen bg-white font-sans scroll-smooth overflow-x-hidden">
       
       {/* --- Navbar --- */}
-      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="text-green-600 font-bold text-2xl flex items-center gap-1">
-              <span className="text-3xl">🍃</span>
-              <span className="text-green-700">Bhai Bhai</span>
-              <span className="text-orange-700 font-black">Food</span>
+<nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100">
+  <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <div className="flex items-center gap-2">
+      <div className="text-green-600 font-bold text-2xl flex items-center gap-1">
+        <span className="text-3xl">🍃</span>
+        <span className="text-green-700">Bhai Bhai</span>
+        <span className="text-orange-700 font-black">Food</span>
+      </div>
+    </div>
+
+    <div className="hidden md:flex gap-10 font-semibold text-gray-700">
+      <a href="#" className="hover:text-green-600 transition">Home</a>
+      <a href="#products" className="hover:text-green-600 transition">Products</a>
+      <a href="#production" className="hover:text-green-600 transition">Production</a>
+      <a href="#contact" className="hover:text-green-600 transition">Contact</a>
+    </div>
+
+    {/* Mobile Toggle Button */}
+    <div className="md:hidden text-gray-800 cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
+      {isOpen ? <X size={30} /> : <Menu size={30} />}
+    </div>
+  </div>
+
+  {/* --- Mobile Menu Overlay --- */}
+  <AnimatePresence>
+    {isOpen && (
+      <motion.div
+        initial={{ opacity: 0, height: 0 }}
+        animate={{ opacity: 1, height: "auto" }}
+        exit={{ opacity: 0, height: 0 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        className="md:hidden bg-white border-b border-gray-100 overflow-hidden"
+      >
+        <div className="px-6 py-8 space-y-8">
+          {/* Navigation Links */}
+          <div className="flex flex-col gap-5 text-xl font-bold text-gray-800">
+            <a href="#" onClick={() => setIsOpen(false)} className="hover:text-green-600">Home</a>
+            <a href="#products" onClick={() => setIsOpen(false)} className="hover:text-green-600">Products</a>
+            <a href="#production" onClick={() => setIsOpen(false)} className="hover:text-green-600">Production</a>
+            <a href="#contact" onClick={() => setIsOpen(false)} className="hover:text-green-600">Contact</a>
+          </div>
+
+          <hr className="border-gray-100" />
+
+          {/* Owner Details Section */}
+          <div className="bg-green-50 p-6 rounded-[2rem] border border-green-100">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 text-green-700 font-black text-[10px] uppercase tracking-widest mb-4">
+              Owner Profile
+            </div>
+            
+            <div className="flex items-center gap-4 mb-6">
+              <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-green-200 flex items-center justify-center text-green-700 text-2xl font-black">
+                {/* আপনি এখানে আপনার ছবি দিতে পারেন */}
+                MS
+              </div>
+              <div>
+                <h4 className="text-lg font-black text-gray-900 leading-tight">Mehedi Hasan Shakib</h4>
+                <p className="text-green-700 text-sm font-bold italic">Software Engineer & Founder</p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <a href={callLink} className="flex items-center gap-3 text-gray-600 hover:text-green-600 transition font-medium">
+                <div className="p-2 bg-white rounded-lg shadow-sm"><Phone size={16} /></div>
+                {phoneNumber}
+              </a>
+              <a href={`mailto:${emailAddress}`} className="flex items-center gap-3 text-gray-600 hover:text-green-600 transition font-medium">
+                <div className="p-2 bg-white rounded-lg shadow-sm"><Mail size={16} /></div>
+                {emailAddress}
+              </a>
+              <div className="flex items-center gap-3 text-gray-600 font-medium">
+                <div className="p-2 bg-white rounded-lg shadow-sm"><MapPin size={16} /></div>
+                Sreepur, Gazipur, Bangladesh
+              </div>
             </div>
           </div>
-
-          <div className="hidden md:flex gap-10 font-semibold text-gray-700">
-            <a href="#" className="hover:text-green-600 transition">Home</a>
-            <a href="#products" className="hover:text-green-600 transition">Products</a>
-            <a href="#production" className="hover:text-green-600 transition">Production</a>
-            <a href="#contact" className="hover:text-green-600 transition">Contact</a>
-          </div>
-
-          <div className="md:hidden text-gray-800" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X size={30} /> : <Menu size={30} />}
-          </div>
         </div>
-      </nav>
+      </motion.div>
+    )}
+  </AnimatePresence>
+</nav>
 
       {/* --- Hero Section --- */}
       <section className="relative h-screen flex items-center justify-center">
