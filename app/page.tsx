@@ -604,6 +604,77 @@ const [showMoreImages, setShowMoreImages] = useState(false);
   </div>
 
   {/* Production Process Modal... (Rest of the modal code) */}
+  {/* --- Production Process Modal (Popup) --- */}
+<AnimatePresence>
+  {showProcess && (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+      {/* Backdrop (কালো আবছা ব্যাকগ্রাউন্ড) */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={() => setShowProcess(false)}
+        className="absolute inset-0 bg-black/80 backdrop-blur-md"
+      />
+      
+      {/* Modal Box */}
+      <motion.div 
+        initial={{ scale: 0.9, opacity: 0, y: 50 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.9, opacity: 0, y: 50 }}
+        className="relative bg-white w-full max-w-2xl rounded-[3rem] overflow-hidden shadow-2xl z-[110]"
+      >
+        {/* Close Button */}
+        <button 
+          onClick={() => setShowProcess(false)}
+          className="absolute top-8 right-8 p-3 bg-gray-100 rounded-full hover:bg-red-50 hover:text-red-600 transition-colors"
+        >
+          <X size={24} />
+        </button>
+
+        <div className="p-10 md:p-16">
+          <div className="text-center mb-12">
+            <span className="text-green-600 font-black uppercase tracking-widest text-xs">Our Workflow</span>
+            <h3 className="text-4xl font-black text-gray-900 mt-2">Factory Process</h3>
+          </div>
+
+          <div className="space-y-8">
+            {[
+              { 
+                t: "Premium Sourcing", 
+                d: "We handpick the finest long-grain paddy directly from the fertile fields of Gazipur and northern Bangladesh, ensuring 100% organic raw materials." 
+              },
+              { 
+                t: "Advanced Cleaning", 
+                d: "Our multi-stage high-pressure water filtration and modern de-stoning machinery remove every impurity for perfectly safe grains." 
+              },
+              { 
+                t: "Hygienic Processing", 
+                d: "Using automated steam-boilers, the paddy is processed at controlled temperatures to lock in natural vitamins and authentic aroma." 
+              },
+              { 
+                t: "Smart Packaging", 
+                d: "Our nitrogen-flushed airtight sealing technology keeps the Muri and Chira fresh, crispy, and flavorful for up to 6 months." 
+              }
+            ].map((step, i) => (
+              <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }} className="flex gap-6">
+                <div className="w-12 h-12 rounded-2xl bg-green-100 text-green-600 flex items-center justify-center font-black">{i + 1}</div>
+                <div>
+                  <h4 className="text-xl font-bold text-gray-900">{step.t}</h4>
+                  <p className="text-gray-500 leading-relaxed">{step.d}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <button onClick={() => setShowProcess(false)} className="w-full mt-12 bg-green-600 text-white py-5 rounded-2xl font-bold shadow-lg">
+            Got It!
+          </button>
+        </div>
+      </motion.div>
+    </div>
+  )}
+</AnimatePresence>
 </section>
 
 {/* --- Testimonials --- */}
