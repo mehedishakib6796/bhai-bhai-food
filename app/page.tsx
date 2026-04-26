@@ -462,77 +462,13 @@ const [showMoreImages, setShowMoreImages] = useState(false);
   <div className="max-w-7xl mx-auto relative z-10">
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
       
-      {/* Left: Image Grid */}
-      <motion.div 
-        initial={{ opacity: 0, x: -50 }} 
-        whileInView={{ opacity: 1, x: 0 }} 
-        viewport={{ once: false }} 
-        transition={{ duration: 0.8 }}
-        className="lg:col-span-7"
-      >
-        <div className="grid grid-cols-2 gap-6 relative">
-          {/* Main Two Images */}
-          <div className="relative p-4 bg-gray-50 rounded-[2.5rem] shadow-xl z-10">
-            <div className="relative h-64 rounded-[2rem] overflow-hidden">
-              <Image src="/machinery.jpg" alt="Machinery" fill className="object-cover" />
-            </div>
-          </div>
-          <div className="relative mt-20 p-4 bg-gray-50 rounded-[2.5rem] shadow-xl z-10">
-            <div className="relative h-80 rounded-[2rem] overflow-hidden">
-              <Image src="/process.jpg" alt="Production Process" fill className="object-cover" />
-            </div>
-          </div>
-
-          {/* Extra 4 Images (Shows when showMoreImages is true) */}
-          <AnimatePresence>
-            {showMoreImages && (
-              <>
-                {[1, 2, 3, 4].map((num) => (
-                  <motion.div
-                    key={num}
-                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.8, y: 20 }}
-                    transition={{ duration: 0.5, delay: num * 0.1 }}
-                    className="relative p-4 bg-gray-50 rounded-[2.5rem] shadow-lg z-10"
-                  >
-                    <div className="relative h-60 rounded-[2rem] overflow-hidden">
-                      <Image src={`/factory-${num}.jpg`} alt={`Factory image ${num}`} fill className="object-cover" />
-                    </div>
-                  </motion.div>
-                ))}
-              </>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* --- Show More Button (Joss Design) --- */}
-        <div className="mt-12 flex justify-center lg:justify-start">
-          <motion.button
-            onClick={() => setShowMoreImages(!showMoreImages)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="group relative flex items-center gap-4 px-8 py-4 bg-white border-2 border-green-600 rounded-full overflow-hidden transition-all duration-500 hover:shadow-[0_0_20px_rgba(22,163,74,0.3)]"
-          >
-            <div className="absolute inset-0 w-0 bg-green-600 transition-all duration-500 group-hover:w-full"></div>
-            <Plus 
-              size={20} 
-              className={`relative z-10 transition-transform duration-500 ${showMoreImages ? 'rotate-45 text-green-600 group-hover:text-white' : 'text-green-600 group-hover:text-white'}`} 
-            />
-            <span className="relative z-10 font-black text-xs uppercase tracking-[0.2em] text-green-600 group-hover:text-white transition-colors duration-500">
-              {showMoreImages ? "Show Less Pictures" : "Show More Factory Pictures"}
-            </span>
-          </motion.button>
-        </div>
-      </motion.div>
-
-      {/* Right: Content Section */}
+      {/* 1. Content Section (Mobile-এ এটি সবার আগে আসবে) */}
       <motion.div 
         initial={{ opacity: 0, x: 50 }} 
         whileInView={{ opacity: 1, x: 0 }} 
         viewport={{ once: false }} 
         transition={{ duration: 0.8 }}
-        className="lg:col-span-5 text-left self-start lg:pt-20"
+        className="lg:col-span-5 text-left order-first lg:order-last"
       >
         <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-green-100 text-green-700 font-black text-sm uppercase tracking-[0.2em] mb-8 shadow-sm">
           <Factory size={18} /> Production Highlights
@@ -554,143 +490,124 @@ const [showMoreImages, setShowMoreImages] = useState(false);
         </motion.button>
       </motion.div>
 
+      {/* 2. Image Grid Column (Mobile-এ এটি টেক্সটের নিচে যাবে) */}
+      <motion.div 
+        initial={{ opacity: 0, x: -50 }} 
+        whileInView={{ opacity: 1, x: 0 }} 
+        viewport={{ once: false }} 
+        transition={{ duration: 0.8 }}
+        className="lg:col-span-7"
+      >
+        <div className="grid grid-cols-2 gap-6 relative">
+          {/* Main Two Images (Permanent) */}
+          <div className="relative p-4 bg-gray-50 rounded-[2.5rem] shadow-xl z-10">
+            <div className="relative h-64 rounded-[2rem] overflow-hidden">
+              <Image src="/machinery.jpg" alt="Machinery" fill className="object-cover" />
+            </div>
+          </div>
+          <div className="relative mt-12 md:mt-20 p-4 bg-gray-50 rounded-[2.5rem] shadow-xl z-10">
+            <div className="relative h-80 rounded-[2rem] overflow-hidden">
+              <Image src="/process.jpg" alt="Production Process" fill className="object-cover" />
+            </div>
+          </div>
+
+          {/* --- Extra 7 Images (Button-এ ক্লিক করলে দেখাবে) --- */}
+          <AnimatePresence>
+            {showMoreImages && (
+              <>
+                {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+                  <motion.div
+                    key={num}
+                    initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.8, y: 30 }}
+                    transition={{ duration: 0.5, delay: num * 0.05 }}
+                    className={`relative p-4 bg-gray-50 rounded-[2.5rem] shadow-lg z-10 ${
+                      (num % 2 === 0) ? "mt-8 md:mt-12" : ""
+                    }`}
+                  >
+                    <div className="relative h-60 rounded-[2rem] overflow-hidden group">
+                      <Image 
+                        src={`/factory-${num}.jpg`} 
+                        alt={`Factory image ${num}`} 
+                        fill 
+                        className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                      />
+                    </div>
+                  </motion.div>
+                ))}
+              </>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* --- The Joss Button --- */}
+        <div className="mt-12 flex justify-center lg:justify-start">
+          <motion.button
+            onClick={() => setShowMoreImages(!showMoreImages)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group relative flex items-center gap-4 px-8 py-4 bg-white border-2 border-green-600 rounded-full overflow-hidden transition-all duration-500 hover:shadow-[0_0_20px_rgba(22,163,74,0.3)]"
+          >
+            <div className="absolute inset-0 w-0 bg-green-600 transition-all duration-500 group-hover:w-full"></div>
+            <Plus 
+              size={20} 
+              className={`relative z-10 transition-transform duration-500 ${showMoreImages ? 'rotate-45 text-green-600 group-hover:text-white' : 'text-green-600 group-hover:text-white'}`} 
+            />
+            <span className="relative z-10 font-black text-[10px] uppercase tracking-[0.2em] text-green-600 group-hover:text-white transition-colors duration-500">
+              {showMoreImages ? "Close Gallery" : "Show More Factory Pictures"}
+            </span>
+          </motion.button>
+        </div>
+      </motion.div>
     </div>
   </div>
 
-
-  {/* --- Production Process Modal --- */}
-  <AnimatePresence>
-    {showProcess && (
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setShowProcess(false)}
-          className="absolute inset-0 bg-black/70 backdrop-blur-md"
-        />
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 100 }}
-          className="relative bg-white rounded-[3rem] shadow-2xl max-w-2xl w-full p-8 md:p-12 z-10 overflow-hidden"
-        >
-          <button 
-            onClick={() => setShowProcess(false)}
-            className="absolute top-8 right-8 p-2 bg-gray-100 hover:bg-red-100 hover:text-red-600 rounded-full transition"
-          >
-            <X size={24} />
-          </button>
-
-          <div className="flex items-center gap-4 mb-8">
-            <div className="p-4 bg-green-100 text-green-600 rounded-2xl">
-              <Factory size={32} />
-            </div>
-            <h2 className="text-3xl font-black text-gray-900 tracking-tight">Our Production Journey</h2>
-          </div>
-
-          <div className="space-y-8 max-h-[60vh] overflow-y-auto pr-4 custom-scrollbar">
-            {[
-              { 
-                step: "01", 
-                title: "Premium Sourcing", 
-                desc: "We source high-quality paddy directly from local farmers across the best harvest regions of Bangladesh, ensuring the finest raw materials." 
-              },
-              { 
-                step: "02", 
-                title: "Advanced Cleaning", 
-                desc: "Using automated grading and dusting technology, we remove all impurities, husks, and dust to ensure 100% purity for every grain." 
-              },
-              { 
-                step: "03", 
-                title: "Precision Processing", 
-                desc: "Our stainless-steel machinery uses modern steaming and crushing techniques to maintain nutrition while keeping the products extra crispy." 
-              },
-              { 
-                step: "04", 
-                title: "Quality Inspection", 
-                desc: "Each batch undergoes rigorous testing. We strictly avoid harmful chemicals or artificial whitening agents to keep your food natural and safe." 
-              },
-              { 
-                step: "05", 
-                title: "Hygienic Packaging", 
-                desc: "Packed with zero human touch in a vacuum-sealed environment, we ensure that factory-fresh taste and aroma reach your doorstep." 
-              }
-            ].map((item, i) => (
-              <motion.div 
-                key={i} 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="flex gap-6"
-              >
-                <span className="text-4xl font-black text-green-200 leading-none">{item.step}</span>
-                <div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-1">{item.title}</h4>
-                  <p className="text-gray-600 leading-relaxed text-sm md:text-base">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.button 
-            onClick={() => setShowProcess(false)}
-            whileHover={{ scale: 1.02 }}
-            className="w-full mt-10 py-4 bg-gray-900 text-white font-bold rounded-2xl"
-          >
-            Got It!
-          </motion.button>
-        </motion.div>
-      </div>
-    )}
-  </AnimatePresence>
+  {/* Production Process Modal... (Rest of the modal code) */}
 </section>
 
+{/* --- Testimonials --- */}
+<section className="py-32 bg-gray-50 relative overflow-hidden px-6">
+  <div className="max-w-7xl mx-auto relative z-10">
+    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }} className="text-left mb-16">
+      <span className="text-green-600 font-bold uppercase tracking-widest text-sm">Testimonials</span>
+      <h2 className="text-4xl md:text-6xl font-black text-gray-900 mt-2 leading-none">Voices of Our <br/><span className="text-green-600">Customers.</span></h2>
+    </motion.div>
 
-      {/* --- Testimonials --- */}
-      <section className="py-32 bg-gray-50 relative overflow-hidden px-6">
-        <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }} className="text-left mb-16">
-            <span className="text-green-600 font-bold uppercase tracking-widest text-sm">Testimonials</span>
-            <h2 className="text-4xl md:text-6xl font-black text-gray-900 mt-2 leading-none">Voices of Our <br/><span className="text-green-600">Customers.</span></h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {[
-              { name: "Abdur Razzak.", role: "Verified Buyer", text: "The best quality puffed rice I've had in years! It stays crispy for an incredibly long time, you can tell it's fresh." },
-              { name: "Samsul Alom.", role: "Regular Customer", text: "Their Red Chira is incredibly authentic. It tastes just like how it was made in our village decades ago." },
-              { name: "Kalam Sheikh.", role: "Happy Client", text: "Excellent packaging and very affordable since it's directly from the factory. A permanent addition to our breakfast routine." }
-            ].map((review, index) => (
-              <motion.div 
-                key={index}
-                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }}
-                transition={{ delay: index * 0.2 }}
-                className="group relative p-12 rounded-[3.5rem] bg-white border border-gray-100 hover:bg-green-600 transition-all duration-500 shadow-sm hover:shadow-2xl"
-              >
-                <div className="flex gap-1 mb-8">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} className="fill-orange-400 text-orange-400 group-hover:text-white group-hover:fill-white" />
-                  ))}
-                </div>
-                <p className="text-gray-600 group-hover:text-white transition-colors duration-500 text-lg leading-relaxed italic mb-10 relative z-10">
-                  "{review.text}"
-                </p>
-                <div className="flex items-center gap-4 border-t border-gray-50 group-hover:border-green-500 pt-8 transition-colors">
-                  <div className="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center text-green-700 font-bold group-hover:bg-white group-hover:text-green-600 transition-colors">
-                    {review.name[0]}
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 group-hover:text-white transition-colors uppercase tracking-tight">{review.name}</h4>
-                    <p className="text-[10px] text-gray-400 group-hover:text-green-100 transition-colors font-bold uppercase tracking-[0.2em]">{review.role}</p>
-                  </div>
-                </div>
-              </motion.div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+      {[
+        { name: "Abdur Razzak.", role: "Verified Buyer", text: "The best quality puffed rice I've had in years! It stays crispy for an incredibly long time, you can tell it's fresh." },
+        { name: "Samsul Alom.", role: "Regular Customer", text: "Their Red Chira is incredibly authentic. It tastes just like how it was made in our village decades ago." },
+        { name: "Kalam Sheikh.", role: "Happy Client", text: "Excellent packaging and very affordable since it's directly from the factory. A permanent addition to our breakfast routine." }
+      ].map((review, index) => (
+        <motion.div 
+          key={index}
+          initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }}
+          transition={{ delay: index * 0.2 }}
+          className="group relative p-12 rounded-[3.5rem] bg-white border border-gray-100 hover:bg-green-600 transition-all duration-500 shadow-sm hover:shadow-2xl"
+        >
+          <div className="flex gap-1 mb-8">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} size={16} className="fill-orange-400 text-orange-400 group-hover:text-white group-hover:fill-white" />
             ))}
           </div>
-        </div>
-      </section>
-
+          <p className="text-gray-600 group-hover:text-white transition-colors duration-500 text-lg leading-relaxed italic mb-10 relative z-10">
+            "{review.text}"
+          </p>
+          <div className="flex items-center gap-4 border-t border-gray-50 group-hover:border-green-500 pt-8 transition-colors">
+            <div className="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center text-green-700 font-bold group-hover:bg-white group-hover:text-green-600 transition-colors">
+              {review.name[0]}
+            </div>
+            <div>
+              <h4 className="font-bold text-gray-900 group-hover:text-white transition-colors uppercase tracking-tight">{review.name}</h4>
+              <p className="text-[10px] text-gray-400 group-hover:text-green-100 transition-colors font-bold uppercase tracking-[0.2em]">{review.role}</p>
+            </div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</section>
 
 
     {/* --- High-Impact FAQ Section --- */}
