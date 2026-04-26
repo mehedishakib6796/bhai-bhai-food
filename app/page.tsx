@@ -22,7 +22,7 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
   const [showProcess, setShowProcess] = useState(false);
 
-  const phoneNumber = "+8801985127685"; 
+  const phoneNumber = "+8801711443830"; 
   const emailAddress = "Bhaibhaifoodproducts1990@gmail.com";
   const whatsappLink = `https://wa.me/${phoneNumber.replace('+', '')}`;
   const callLink = `tel:${phoneNumber}`;
@@ -73,70 +73,78 @@ export default function Home() {
       <a href="#contact" className="hover:text-green-600 transition">Contact</a>
     </div>
 
-    {/* Mobile Toggle Button */}
-    <div className="md:hidden text-gray-800 cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
-      {isOpen ? <X size={30} /> : <Menu size={30} />}
+   {/* Mobile Toggle Button */}
+<div className="md:hidden text-gray-800 cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
+  {isOpen ? <X size={30} /> : <Menu size={30} />}
+</div>
+</div>
+
+{/* --- Mobile Menu Overlay --- */}
+<AnimatePresence>
+{isOpen && (
+  <motion.div
+    initial={{ opacity: 0, height: 0 }}
+    animate={{ opacity: 1, height: "auto" }}
+    exit={{ opacity: 0, height: 0 }}
+    transition={{ duration: 0.5, ease: "easeInOut" }}
+    className="md:hidden bg-white border-b border-gray-100 overflow-hidden"
+  >
+    <div className="px-6 py-8 space-y-6">
+      {/* Navigation Links */}
+      <div className="flex flex-col gap-5 text-xl font-bold text-gray-800">
+        <a href="#" onClick={() => setIsOpen(false)} className="hover:text-green-600">Home</a>
+        <a href="#products" onClick={() => setIsOpen(false)} className="hover:text-green-600">Products</a>
+        <a href="#production" onClick={() => setIsOpen(false)} className="hover:text-green-600">Production</a>
+        <a href="#contact" onClick={() => setIsOpen(false)} className="hover:text-green-600">Contact</a>
+      </div>
+
+      <hr className="border-gray-100" />
+
+      {/* Owner Button & Collapsible List */}
+      <div className="space-y-4">
+        <button 
+          onClick={() => setShowProcess(!showProcess)} 
+          className="w-full flex items-center justify-between p-4 bg-gray-50 rounded-2xl border border-gray-100 text-gray-900 font-black text-xs uppercase tracking-[0.2em]"
+        >
+          <span>Meet Our Leadership</span>
+          <ChevronDown size={18} className={`transition-transform duration-300 ${showProcess ? "rotate-180" : ""}`} />
+        </button>
+
+        <AnimatePresence>
+          {showProcess && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="space-y-3"
+            >
+              {[
+                { name: "Mariam Akter", role: "Managing Director", initial: "MA", color: "bg-emerald-500" },
+                { name: "Mahmudul Hasan Shead", role: "Client Relationship Manager", initial: "MS", color: "bg-blue-500" },
+                { name: "MD Sujon Ahmed", role: "Accounts Manager", initial: "SA", color: "bg-orange-500" },
+                { name: "Riyad Shakib", role: "Admin Manager", initial: "RS", color: "bg-purple-500" },
+                { name: "Jannatul Ferdous", role: "Office Executive", initial: "JF", color: "bg-rose-500" }
+              ].map((leader, idx) => (
+                <div key={idx} className="flex items-center gap-4 p-3 bg-white rounded-2xl border border-gray-50 shadow-sm">
+                  <div className={`w-10 h-10 rounded-xl ${leader.color} flex items-center justify-center text-white text-[10px] font-black`}>
+                    {leader.initial}
+                  </div>
+                  <div>
+                    <h4 className="text-[12px] font-black text-gray-900 leading-none">{leader.name}</h4>
+                    <p className="text-[9px] font-bold text-gray-400 uppercase mt-1 tracking-wider">{leader.role}</p>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
-  </div>
-
-  {/* --- Mobile Menu Overlay --- */}
-  <AnimatePresence>
-    {isOpen && (
-      <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ opacity: 1, height: "auto" }}
-        exit={{ opacity: 0, height: 0 }}
-        transition={{ duration: 0.5, ease: "easeInOut" }}
-        className="md:hidden bg-white border-b border-gray-100 overflow-hidden"
-      >
-        <div className="px-6 py-8 space-y-8">
-          {/* Navigation Links */}
-          <div className="flex flex-col gap-5 text-xl font-bold text-gray-800">
-            <a href="#" onClick={() => setIsOpen(false)} className="hover:text-green-600">Home</a>
-            <a href="#products" onClick={() => setIsOpen(false)} className="hover:text-green-600">Products</a>
-            <a href="#production" onClick={() => setIsOpen(false)} className="hover:text-green-600">Production</a>
-            <a href="#contact" onClick={() => setIsOpen(false)} className="hover:text-green-600">Contact</a>
-          </div>
-
-          <hr className="border-gray-100" />
-
-          {/* Owner Details Section */}
-          <div className="bg-green-50 p-6 rounded-[2rem] border border-green-100">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 text-green-700 font-black text-[10px] uppercase tracking-widest mb-4">
-              Owner Profile
-            </div>
-            
-            <div className="flex items-center gap-4 mb-6">
-              <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-green-200 flex items-center justify-center text-green-700 text-2xl font-black">
-                {/* আপনি এখানে আপনার ছবি দিতে পারেন */}
-                MS
-              </div>
-              <div>
-                <h4 className="text-lg font-black text-gray-900 leading-tight">Mehedi Hasan Shakib</h4>
-                <p className="text-green-700 text-sm font-bold italic">Software Engineer & Founder</p>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <a href={callLink} className="flex items-center gap-3 text-gray-600 hover:text-green-600 transition font-medium">
-                <div className="p-2 bg-white rounded-lg shadow-sm"><Phone size={16} /></div>
-                {phoneNumber}
-              </a>
-              <a href={`mailto:${emailAddress}`} className="flex items-center gap-3 text-gray-600 hover:text-green-600 transition font-medium">
-                <div className="p-2 bg-white rounded-lg shadow-sm"><Mail size={16} /></div>
-                {emailAddress}
-              </a>
-              <div className="flex items-center gap-3 text-gray-600 font-medium">
-                <div className="p-2 bg-white rounded-lg shadow-sm"><MapPin size={16} /></div>
-                Sreepur, Gazipur,Dhaka, Bangladesh
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    )}
-  </AnimatePresence>
+  </motion.div>
+)}
+</AnimatePresence>
 </nav>
+
 
       {/* --- Hero Section --- */}
       <section className="relative h-screen flex items-center justify-center">
@@ -790,6 +798,79 @@ export default function Home() {
     <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl transition-transform group-hover:scale-150 duration-700" />
   </div>
 </div>
+
+
+
+{/* --- Ultra-Clean Minimalist Management --- */}
+<div className="mt-20 px-4 space-y-6">
+  {/* Modernized Header Design */}
+  <div className="relative flex flex-col items-center mb-10">
+    <motion.div 
+      initial={{ width: 0 }}
+      whileInView={{ width: "40px" }}
+      className="h-1 bg-green-600 rounded-full mb-3" 
+    />
+    <h2 className="text-gray-950 font-black text-2xl uppercase tracking-tighter text-center">
+      Our <span className="text-green-600">Management</span>
+    </h2>
+    <p className="text-[9px] font-bold text-gray-400 uppercase tracking-[0.4em] mt-1">
+      The Core Team
+    </p>
+  </div>
+
+  <div className="space-y-4">
+    {[
+      { name: "Mariam Akter", role: "Managing Director", phone: "01812139217", initial: "MA", color: "bg-emerald-500" },
+      { name: "MD Mahmudul Hasan Shead", role: "Client Relationship Manager", phone: "01985126785", initial: "MS", color: "bg-sky-500" },
+      { name: "MD Sujon Ahmed", role: "Accounts Manager", phone: "01935305068", initial: "SA", color: "bg-orange-500" },
+      { name: "Riyad Hasan Shakil", role: "Admin Manager", phone: "01968093300", initial: "RS", color: "bg-purple-500" },
+      { name: "Jannatul Ferdous", role: "Office Executive", phone: "01708056878", initial: "JF", color: "bg-rose-500" }
+    ].map((leader, index) => (
+      <motion.div
+        key={index}
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ delay: index * 0.1 }}
+        whileTap={{ scale: 0.97 }}
+        className="group flex items-center justify-between p-5 bg-white rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-gray-200/50 hover:border-green-100 transition-all duration-500"
+      >
+        <div className="flex items-center gap-5">
+          {/* প্রোফাইল সার্কেল উইথ পালস ইফেক্ট */}
+          <div className="relative">
+            <div className={`w-14 h-14 rounded-2xl ${leader.color} flex items-center justify-center text-white font-black text-lg shadow-lg transform group-hover:rotate-6 transition-transform duration-500`}>
+              {leader.initial}
+            </div>
+            <div className={`absolute inset-0 rounded-2xl ${leader.color} opacity-20 blur-lg group-hover:opacity-40 transition-opacity`} />
+          </div>
+          
+          {/* নাম এবং পজিশন */}
+          <div>
+            <h4 className="text-md font-black text-gray-900 leading-none mb-1.5 group-hover:text-green-600 transition-colors">
+              {leader.name}
+            </h4>
+            <div className="flex items-center gap-1.5">
+              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+              <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
+                {leader.role}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* প্রিমিয়াম হোয়াটসঅ্যাপ বাটন */}
+        <a 
+          href={`https://wa.me/88${leader.phone}`}
+          target="_blank"
+          className="w-12 h-12 bg-gray-900 text-white rounded-2xl flex items-center justify-center shadow-lg hover:bg-green-600 hover:scale-110 active:scale-90 transition-all duration-300"
+        >
+          <MessageSquare size={20} fill="currentColor" className="text-green-400" />
+        </a>
+      </motion.div>
+    ))}
+  </div> 
+</div>
+
+
 
      {/* --- CTA Section --- */}
 <section className="py-24 px-6 bg-white">
