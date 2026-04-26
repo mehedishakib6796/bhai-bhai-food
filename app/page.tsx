@@ -496,7 +496,7 @@ const [showMoreImages, setShowMoreImages] = useState(false);
           {/* Main Two Images (Permanent) */}
           <div className="relative p-4 bg-gray-50 rounded-[2.5rem] shadow-xl z-10">
             <div className="relative h-64 rounded-[2rem] overflow-hidden">
-              <Image src="/machinery.jpg" alt="Machinery" fill className="object-cover" />
+              <Image src="/process1.jpg" alt="Machinery" fill className="object-cover" />
             </div>
           </div>
           <div className="relative mt-12 md:mt-20 p-4 bg-gray-50 rounded-[2.5rem] shadow-xl z-10">
