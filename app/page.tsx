@@ -139,7 +139,7 @@ const [showMoreImages, setShowMoreImages] = useState(false);
         {/* Footer Branding */}
         <div className="text-center pt-4 border-t border-gray-50">
            <p className="text-[9px] font-bold text-gray-300 uppercase tracking-widest italic">
-             Bhai Bhai Food Factory • Purity Guaranteed
+             Bhai Bhai Food Product • Purity Guaranteed
            </p>
         </div>
       </div>
@@ -178,7 +178,7 @@ const [showMoreImages, setShowMoreImages] = useState(false);
           <div className="space-y-3">
             {[
               { name: "Mariam Akter", role: "Managing Director", initial: "MA", color: "bg-emerald-500", phone: "8801812139217" },
-              { name: "Mahmudul Hasan Shead", role: "CRM Manager", initial: "MS", color: "bg-blue-500", phone: "8801985126785" },
+              { name: "MD. Mahmudul Hasan Shead", role: "CRM Manager", initial: "MS", color: "bg-blue-500", phone: "8801985126785" },
               { name: "Anwar Hossain Sojan", role: "Accounts Manager", initial: "SA", color: "bg-orange-500", phone: "8801935305068" },
               { name: "Riyad Hasan Shakil", role: "Admin Manager", initial: "RS", color: "bg-purple-500", phone: "8801968093300" },
               { name: "Jannatul Ferdous", role: "Office Executive", initial: "JF", color: "bg-rose-500", phone: "8801708056878" }
@@ -980,7 +980,7 @@ const [showMoreImages, setShowMoreImages] = useState(false);
 
         <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-gray-800 text-center">
   <div className="text-gray-600 text-[10px] font-black uppercase tracking-[0.5em]">
-    © 2023 Bhai Bhai Food Factory. Pure & Organic Tradition.
+    © 2023 Bhai Bhai Food Product. Pure & Organic Tradition.
   </div>
 </div>
       </footer>
