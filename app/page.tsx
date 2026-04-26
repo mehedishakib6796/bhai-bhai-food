@@ -56,7 +56,8 @@ export default function Home() {
     <div className="relative min-h-screen bg-white font-sans scroll-smooth overflow-x-hidden">
       
      
-     {/* --- Navbar --- */}
+     
+    {/* --- Navbar --- */}
 <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100">
   <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
     <div className="flex items-center gap-2">
@@ -90,34 +91,39 @@ export default function Home() {
         transition={{ duration: 0.5, ease: "easeInOut" }}
         className="md:hidden bg-white border-b border-gray-100 overflow-hidden"
       >
-        <div className="px-6 py-8 space-y-6">
-          {/* Navigation Links */}
-          <div className="flex flex-col gap-5 text-xl font-bold text-gray-800">
-            <a href="#" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Home</a>
-            <a href="#products" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Products</a>
-            <a href="#production" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Production</a>
-            <a href="#contact" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Contact</a>
+        <div className="px-6 py-8 space-y-8">
+          {/* 1. Navigation Links */}
+          <div className="flex flex-col gap-5">
+            <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">Menu</span>
+            <div className="flex flex-col gap-4 text-xl font-bold text-gray-800">
+              <a href="#" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Home</a>
+              <a href="#products" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Products</a>
+              <a href="#production" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Production</a>
+              <a href="#contact" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Contact</a>
+            </div>
           </div>
 
           <hr className="border-gray-100" />
 
-          {/* Owner Info Toggle Section */}
+          {/* 2. Management Section (Click to toggle) */}
           <div className="space-y-4">
             <button 
               onClick={() => setShowProcess(!showProcess)} 
-              className="w-full flex items-center justify-between p-4 bg-green-50 rounded-2xl border border-green-100 text-green-800 font-black text-xs uppercase tracking-[0.2em] active:scale-95 transition-all"
+              className="w-full flex items-center justify-between text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] hover:text-green-600 transition"
             >
-              <span>Meet Our Leadership</span>
-              <ChevronDown size={18} className={`transition-transform duration-300 ${showProcess ? "rotate-180" : ""}`} />
+              <span>Ownership & Management</span>
+              <motion.div animate={{ rotate: showProcess ? 180 : 0 }}>
+                <ChevronDown size={14} />
+              </motion.div>
             </button>
-
+            
             <AnimatePresence>
               {showProcess && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="space-y-3 overflow-hidden"
+                <motion.div 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="grid grid-cols-1 gap-3"
                 >
                   {[
                     { name: "Mariam Akter", role: "Managing Director", initial: "MA", color: "bg-emerald-500" },
@@ -127,18 +133,18 @@ export default function Home() {
                     { name: "Jannatul Ferdous", role: "Office Executive", initial: "JF", color: "bg-rose-500" }
                   ].map((leader, idx) => (
                     <motion.div 
-                      key={idx} 
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: idx * 0.05 }}
-                      className="flex items-center gap-4 p-3 bg-white rounded-2xl border border-gray-50 shadow-sm"
+                      key={idx} 
+                      className="flex items-center gap-4 p-4 bg-gray-50/50 rounded-[1.5rem] border border-gray-100"
                     >
-                      <div className={`w-10 h-10 rounded-xl ${leader.color} flex items-center justify-center text-white text-[10px] font-black`}>
+                      <div className={`w-10 h-10 rounded-xl ${leader.color} flex items-center justify-center text-white text-[10px] font-black shadow-sm`}>
                         {leader.initial}
                       </div>
                       <div>
-                        <h4 className="text-[12px] font-black text-gray-900 leading-none">{leader.name}</h4>
-                        <p className="text-[9px] font-bold text-gray-400 uppercase mt-1 tracking-wider">{leader.role}</p>
+                        <h4 className="text-[13px] font-black text-gray-900 leading-none">{leader.name}</h4>
+                        <p className="text-[10px] font-bold text-gray-400 uppercase mt-1 tracking-tight">{leader.role}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -146,11 +152,18 @@ export default function Home() {
               )}
             </AnimatePresence>
           </div>
+          
+          <div className="text-center pt-4">
+             <p className="text-[9px] font-bold text-gray-300 uppercase tracking-widest">Bhai Bhai Food Factory</p>
+          </div>
         </div>
       </motion.div>
     )}
   </AnimatePresence>
 </nav>
+
+
+
 
 
 
