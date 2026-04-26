@@ -25,6 +25,7 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
   const [showProcess, setShowProcess] = useState(false);
 const [isModalOpen, setIsModalOpen] = useState(false);
+const [showMoreImages, setShowMoreImages] = useState(false);
   const phoneNumber = "+8801711443830"; 
   const emailAddress = "Bhaibhaifoodproducts1990@gmail.com";
   const whatsappLink = `https://wa.me/${phoneNumber.replace('+', '')}`;
@@ -182,11 +183,11 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 
           <div className="space-y-3">
             {[
-              { name: "Mariam Akter", role: "Managing Director", initial: "MA", color: "bg-emerald-500", phone: "8801XXXXXXXXX" },
-              { name: "Mahmudul Hasan Shead", role: "CRM Manager", initial: "MS", color: "bg-blue-500", phone: "8801XXXXXXXXX" },
-              { name: "MD Sujon Ahmed", role: "Accounts Manager", initial: "SA", color: "bg-orange-500", phone: "8801XXXXXXXXX" },
-              { name: "Riyad Shakib", role: "Admin Manager", initial: "RS", color: "bg-purple-500", phone: "8801XXXXXXXXX" },
-              { name: "Jannatul Ferdous", role: "Office Executive", initial: "JF", color: "bg-rose-500", phone: "8801XXXXXXXXX" }
+              { name: "Mariam Akter", role: "Managing Director", initial: "MA", color: "bg-emerald-500", phone: "8801812139217" },
+              { name: "Mahmudul Hasan Shead", role: "CRM Manager", initial: "MS", color: "bg-blue-500", phone: "8801985126785" },
+              { name: "MD Sujon Ahmed", role: "Accounts Manager", initial: "SA", color: "bg-orange-500", phone: "8801935305068" },
+              { name: "Riyad Hasan Shakil", role: "Admin Manager", initial: "RS", color: "bg-purple-500", phone: "8801968093300" },
+              { name: "Jannatul Ferdous", role: "Office Executive", initial: "JF", color: "bg-rose-500", phone: "8801708056878" }
             ].map((leader, idx) => (
               <div key={idx} className="flex items-center justify-between p-3 bg-gray-50/50 rounded-2xl border border-gray-100">
                 <div className="flex items-center gap-3">
@@ -460,25 +461,78 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 <section id="production" className="relative py-32 bg-white px-6 overflow-hidden">
   <div className="max-w-7xl mx-auto relative z-10">
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+      
+      {/* Left: Image Grid */}
       <motion.div 
-        initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ duration: 0.8 }}
-        className="lg:col-span-7 grid grid-cols-2 gap-6 relative"
+        initial={{ opacity: 0, x: -50 }} 
+        whileInView={{ opacity: 1, x: 0 }} 
+        viewport={{ once: false }} 
+        transition={{ duration: 0.8 }}
+        className="lg:col-span-7"
       >
-        <div className="relative p-4 bg-gray-50 rounded-[2.5rem] shadow-xl z-10">
-          <div className="relative h-64 rounded-[2rem] overflow-hidden">
-            <Image src="/machinery.jpg" alt="Machinery" fill className="object-cover" />
+        <div className="grid grid-cols-2 gap-6 relative">
+          {/* Main Two Images */}
+          <div className="relative p-4 bg-gray-50 rounded-[2.5rem] shadow-xl z-10">
+            <div className="relative h-64 rounded-[2rem] overflow-hidden">
+              <Image src="/machinery.jpg" alt="Machinery" fill className="object-cover" />
+            </div>
           </div>
+          <div className="relative mt-20 p-4 bg-gray-50 rounded-[2.5rem] shadow-xl z-10">
+            <div className="relative h-80 rounded-[2rem] overflow-hidden">
+              <Image src="/process.jpg" alt="Production Process" fill className="object-cover" />
+            </div>
+          </div>
+
+          {/* Extra 4 Images (Shows when showMoreImages is true) */}
+          <AnimatePresence>
+            {showMoreImages && (
+              <>
+                {[1, 2, 3, 4].map((num) => (
+                  <motion.div
+                    key={num}
+                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.8, y: 20 }}
+                    transition={{ duration: 0.5, delay: num * 0.1 }}
+                    className="relative p-4 bg-gray-50 rounded-[2.5rem] shadow-lg z-10"
+                  >
+                    <div className="relative h-60 rounded-[2rem] overflow-hidden">
+                      <Image src={`/factory-${num}.jpg`} alt={`Factory image ${num}`} fill className="object-cover" />
+                    </div>
+                  </motion.div>
+                ))}
+              </>
+            )}
+          </AnimatePresence>
         </div>
-        <div className="relative mt-20 p-4 bg-gray-50 rounded-[2.5rem] shadow-xl z-10">
-          <div className="relative h-80 rounded-[2rem] overflow-hidden">
-            <Image src="/process.jpg" alt="Production Process" fill className="object-cover" />
-          </div>
+
+        {/* --- Show More Button (Joss Design) --- */}
+        <div className="mt-12 flex justify-center lg:justify-start">
+          <motion.button
+            onClick={() => setShowMoreImages(!showMoreImages)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group relative flex items-center gap-4 px-8 py-4 bg-white border-2 border-green-600 rounded-full overflow-hidden transition-all duration-500 hover:shadow-[0_0_20px_rgba(22,163,74,0.3)]"
+          >
+            <div className="absolute inset-0 w-0 bg-green-600 transition-all duration-500 group-hover:w-full"></div>
+            <Plus 
+              size={20} 
+              className={`relative z-10 transition-transform duration-500 ${showMoreImages ? 'rotate-45 text-green-600 group-hover:text-white' : 'text-green-600 group-hover:text-white'}`} 
+            />
+            <span className="relative z-10 font-black text-xs uppercase tracking-[0.2em] text-green-600 group-hover:text-white transition-colors duration-500">
+              {showMoreImages ? "Show Less Pictures" : "Show More Factory Pictures"}
+            </span>
+          </motion.button>
         </div>
       </motion.div>
 
+      {/* Right: Content Section */}
       <motion.div 
-        initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ duration: 0.8 }}
-        className="lg:col-span-5 text-left"
+        initial={{ opacity: 0, x: 50 }} 
+        whileInView={{ opacity: 1, x: 0 }} 
+        viewport={{ once: false }} 
+        transition={{ duration: 0.8 }}
+        className="lg:col-span-5 text-left self-start lg:pt-20"
       >
         <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-green-100 text-green-700 font-black text-sm uppercase tracking-[0.2em] mb-8 shadow-sm">
           <Factory size={18} /> Production Highlights
@@ -499,8 +553,10 @@ const [isModalOpen, setIsModalOpen] = useState(false);
           Explore Process <ArrowRight size={20} />
         </motion.button>
       </motion.div>
+
     </div>
   </div>
+
 
   {/* --- Production Process Modal --- */}
   <AnimatePresence>
