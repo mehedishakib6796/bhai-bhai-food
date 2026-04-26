@@ -3,15 +3,15 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
-// সব প্রয়োজনীয় আইকন এখানে অ্যাড করা হয়েছে
+
 import { 
   Menu, X, Phone, MapPin, Star, 
   MessageSquare, ArrowRight, Factory, Mail,
   ChevronDown, HelpCircle, Plus, Minus,
-  Users, MessageCircle // এই দুটি আইকন মিসিং ছিল
+  Users, MessageCircle 
 } from "lucide-react";
 
-// রিইউজেবল অ্যানিমেশন ভ্যারিয়েন্ট
+
 const fadeInUp = {
   hidden: { opacity: 0, y: 60 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
@@ -87,15 +87,9 @@ const [showMoreImages, setShowMoreImages] = useState(false);
 
 
 
-{/* --- Mobile Toggle Button (3-Dot/Menu) --- */}
-<div className="md:hidden flex items-center">
-  <button 
-    onClick={() => setIsOpen(!isOpen)} 
-    className="p-2 text-gray-800 hover:bg-gray-100 rounded-xl transition-colors"
-  >
-    {isOpen ? <X size={28} /> : <Menu size={28} />}
-  </button>
-</div>
+
+
+
 
 {/* --- Mobile Menu Overlay --- */}
 <AnimatePresence>
@@ -185,7 +179,7 @@ const [showMoreImages, setShowMoreImages] = useState(false);
             {[
               { name: "Mariam Akter", role: "Managing Director", initial: "MA", color: "bg-emerald-500", phone: "8801812139217" },
               { name: "Mahmudul Hasan Shead", role: "CRM Manager", initial: "MS", color: "bg-blue-500", phone: "8801985126785" },
-              { name: "MD Sujon Ahmed", role: "Accounts Manager", initial: "SA", color: "bg-orange-500", phone: "8801935305068" },
+              { name: "Anwar Hossain Sojan", role: "Accounts Manager", initial: "SA", color: "bg-orange-500", phone: "8801935305068" },
               { name: "Riyad Hasan Shakil", role: "Admin Manager", initial: "RS", color: "bg-purple-500", phone: "8801968093300" },
               { name: "Jannatul Ferdous", role: "Office Executive", initial: "JF", color: "bg-rose-500", phone: "8801708056878" }
             ].map((leader, idx) => (
@@ -511,35 +505,37 @@ const [showMoreImages, setShowMoreImages] = useState(false);
             </div>
           </div>
 
-          {/* --- Extra 7 Images (Button-এ ক্লিক করলে দেখাবে) --- */}
-          <AnimatePresence>
-            {showMoreImages && (
-              <>
-                {[1, 2, 3, 4, 5, 6, 7].map((num) => (
-                  <motion.div
-                    key={num}
-                    initial={{ opacity: 0, scale: 0.8, y: 30 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.8, y: 30 }}
-                    transition={{ duration: 0.5, delay: num * 0.05 }}
-                    className={`relative p-4 bg-gray-50 rounded-[2.5rem] shadow-lg z-10 ${
-                      (num % 2 === 0) ? "mt-8 md:mt-12" : ""
-                    }`}
-                  >
-                    <div className="relative h-60 rounded-[2rem] overflow-hidden group">
-                      <Image 
-                        src={`/factory-${num}.jpg`} 
-                        alt={`Factory image ${num}`} 
-                        fill 
-                        className="object-cover transition-transform duration-700 group-hover:scale-110" 
-                      />
-                    </div>
-                  </motion.div>
-                ))}
-              </>
-            )}
-          </AnimatePresence>
-        </div>
+         {/* --- Extra 7 Images (Button-এ ক্লিক করলে দেখাবে) --- */}
+<AnimatePresence>
+  {showMoreImages && (
+    <>
+      {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+        <motion.div
+          key={num}
+          initial={{ opacity: 0, scale: 0.8, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8, y: 30 }}
+          transition={{ duration: 0.5, delay: num * 0.05 }}
+          className={`relative p-4 bg-gray-50 rounded-[2.5rem] shadow-lg z-10 ${
+            (num % 2 === 0) ? "mt-8 md:mt-12" : ""
+          }`}
+        >
+          <div className="relative h-60 rounded-[2rem] overflow-hidden group">
+            <Image 
+              src={`/factory-${num}.jpg`} 
+              alt={`Factory image ${num}`} 
+              fill 
+              className="object-cover transition-transform duration-700 group-hover:scale-110" 
+              unoptimized={true}
+            />
+          </div>
+        </motion.div>
+      ))}
+    </>
+  )}
+</AnimatePresence>
+</div>
+
 
         {/* --- The Joss Button --- */}
         <div className="mt-12 flex justify-center lg:justify-start">
