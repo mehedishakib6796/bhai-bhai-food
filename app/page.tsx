@@ -1,12 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
-
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, HelpCircle, Plus, Minus } from "lucide-react"; // নতুন আইকন
 import Image from "next/image";
+
+// সব প্রয়োজনীয় আইকন এখানে অ্যাড করা হয়েছে
 import { 
   Menu, X, Phone, MapPin, Star, 
-  MessageSquare, ArrowRight, Factory, Mail
+  MessageSquare, ArrowRight, Factory, Mail,
+  ChevronDown, HelpCircle, Plus, Minus,
+  Users, MessageCircle // এই দুটি আইকন মিসিং ছিল
 } from "lucide-react";
 
 // রিইউজেবল অ্যানিমেশন ভ্যারিয়েন্ট
@@ -84,7 +86,17 @@ export default function Home() {
 
 
 
- {/* --- Mobile Menu Overlay --- */}
+{/* --- Mobile Toggle Button (3-Dot/Menu) --- */}
+<div className="md:hidden flex items-center">
+  <button 
+    onClick={() => setIsOpen(!isOpen)} 
+    className="p-2 text-gray-800 hover:bg-gray-100 rounded-xl transition-colors"
+  >
+    {isOpen ? <X size={28} /> : <Menu size={28} />}
+  </button>
+</div>
+
+{/* --- Mobile Menu Overlay --- */}
 <AnimatePresence>
   {isOpen && (
     <motion.div
@@ -109,48 +121,64 @@ export default function Home() {
 
         <hr className="border-gray-100" />
 
-        {/* 2. Management Section (Fixed Logical Conflict) */}
+        {/* 2. Management Section with WhatsApp Icon */}
         <div className="space-y-4">
           <button 
-            onClick={() => setShowManagement(!showManagement)} // টগল করার জন্য আলাদা স্টেট
-            className="w-full flex items-center justify-between text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] hover:text-green-600 transition outline-none"
+            type="button"
+            onClick={() => setShowManagement(!showManagement)} 
+            className="w-full flex items-center justify-between p-4 bg-gray-50 rounded-2xl group transition-all duration-300 hover:bg-green-50"
           >
-            <span>Ownership & Management</span>
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-white rounded-lg shadow-sm group-hover:bg-green-600 group-hover:text-white transition-colors">
+                <Users size={16} />
+              </div>
+              <span className="text-[11px] font-black text-gray-700 uppercase tracking-wider">Ownership & Management</span>
+            </div>
             <motion.div animate={{ rotate: showManagement ? 180 : 0 }}>
-              <ChevronDown size={14} />
+              <ChevronDown size={16} className="text-gray-400" />
             </motion.div>
           </button>
           
           <AnimatePresence>
-            {showManagement && ( // শুধুমাত্র ম্যানেজমেন্টের জন্য আলাদা কন্ডিশন
+            {showManagement && (
               <motion.div 
-                initial={{ opacity: 0, y: -10, height: 0 }}
-                animate={{ opacity: 1, y: 0, height: "auto" }}
-                exit={{ opacity: 0, y: -10, height: 0 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
                 className="grid grid-cols-1 gap-3 overflow-hidden"
               >
                 {[
-                  { name: "Mariam Akter", role: "Managing Director", initial: "MA", color: "bg-emerald-500" },
-                  { name: "Mahmudul Hasan Shead", role: "Client Relationship Manager", initial: "MS", color: "bg-blue-500" },
-                  { name: "MD Sujon Ahmed", role: "Accounts Manager", initial: "SA", color: "bg-orange-500" },
-                  { name: "Riyad Shakib", role: "Admin Manager", initial: "RS", color: "bg-purple-500" },
-                  { name: "Jannatul Ferdous", role: "Office Executive", initial: "JF", color: "bg-rose-500" }
+                  { name: "Mariam Akter", role: "Managing Director", initial: "MA", color: "bg-emerald-500", phone: "8801XXXXXXXXX" },
+                  { name: "Mahmudul Hasan Shead", role: "CRM Manager", initial: "MS", color: "bg-blue-500", phone: "8801XXXXXXXXX" },
+                  { name: "MD Sujon Ahmed", role: "Accounts Manager", initial: "SA", color: "bg-orange-500", phone: "8801XXXXXXXXX" },
+                  { name: "Riyad Shakib", role: "Admin Manager", initial: "RS", color: "bg-purple-500", phone: "8801XXXXXXXXX" },
+                  { name: "Jannatul Ferdous", role: "Office Executive", initial: "JF", color: "bg-rose-500", phone: "8801XXXXXXXXX" }
                 ].map((leader, idx) => (
                   <motion.div 
+                    key={idx} 
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.05 }}
-                    key={idx} 
-                    className="flex items-center gap-4 p-4 bg-gray-50/50 rounded-[1.5rem] border border-gray-100 shadow-sm"
+                    className="flex items-center justify-between p-4 bg-white rounded-[1.5rem] border border-gray-100 shadow-sm"
                   >
-                    <div className={`w-10 h-10 rounded-xl ${leader.color} flex items-center justify-center text-white text-[10px] font-black shadow-inner`}>
-                      {leader.initial}
+                    <div className="flex items-center gap-4">
+                      <div className={`w-10 h-10 rounded-xl ${leader.color} flex items-center justify-center text-white text-[10px] font-black shadow-sm`}>
+                        {leader.initial}
+                      </div>
+                      <div>
+                        <h4 className="text-[13px] font-black text-gray-900 leading-none">{leader.name}</h4>
+                        <p className="text-[10px] font-bold text-gray-400 uppercase mt-1 tracking-tight">{leader.role}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-[13px] font-black text-gray-900 leading-none">{leader.name}</h4>
-                      <p className="text-[10px] font-bold text-gray-400 uppercase mt-1 tracking-tight">{leader.role}</p>
-                    </div>
+
+                    {/* WhatsApp Action Button */}
+                    <a 
+                      href={`https://wa.me/${leader.phone}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-2.5 bg-green-500 text-white rounded-full hover:bg-green-600 transition-transform active:scale-90"
+                    >
+                      <MessageCircle size={16} />
+                    </a>
                   </motion.div>
                 ))}
               </motion.div>
@@ -158,7 +186,7 @@ export default function Home() {
           </AnimatePresence>
         </div>
         
-        {/* Footer Branding inside Menu */}
+        {/* Footer Branding */}
         <div className="text-center pt-4 border-t border-gray-50">
            <p className="text-[9px] font-bold text-gray-300 uppercase tracking-widest italic">
              Bhai Bhai Food Factory • Purity Guaranteed
@@ -169,7 +197,6 @@ export default function Home() {
   )}
 </AnimatePresence>
 </nav>
-
 
 
 
