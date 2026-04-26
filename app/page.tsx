@@ -24,7 +24,7 @@ export default function Home() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
   const [showProcess, setShowProcess] = useState(false);
-
+const [isModalOpen, setIsModalOpen] = useState(false);
   const phoneNumber = "+8801711443830"; 
   const emailAddress = "Bhaibhaifoodproducts1990@gmail.com";
   const whatsappLink = `https://wa.me/${phoneNumber.replace('+', '')}`;
@@ -121,69 +121,24 @@ export default function Home() {
 
         <hr className="border-gray-100" />
 
-        {/* 2. Management Section with WhatsApp Icon */}
+        {/* 2. Management Section with Popup Button */}
         <div className="space-y-4">
           <button 
             type="button"
-            onClick={() => setShowManagement(!showManagement)} 
-            className="w-full flex items-center justify-between p-4 bg-gray-50 rounded-2xl group transition-all duration-300 hover:bg-green-50"
+            onClick={() => setIsModalOpen(true)} // পপআপ ওপেন করার জন্য
+            className="w-full flex items-center justify-between p-5 bg-gradient-to-r from-gray-50 to-white border border-gray-100 rounded-[2rem] group transition-all active:scale-95 shadow-sm"
           >
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-white rounded-lg shadow-sm group-hover:bg-green-600 group-hover:text-white transition-colors">
-                <Users size={16} />
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-green-600 text-white rounded-xl flex items-center justify-center shadow-lg shadow-green-100">
+                <Users size={18} />
               </div>
-              <span className="text-[11px] font-black text-gray-700 uppercase tracking-wider">Ownership & Management</span>
+              <div className="text-left">
+                <span className="block text-[11px] font-black text-gray-800 uppercase tracking-wider">Ownership & Management</span>
+                <span className="block text-[9px] font-bold text-gray-400 uppercase mt-0.5 tracking-widest">Click to view details</span>
+              </div>
             </div>
-            <motion.div animate={{ rotate: showManagement ? 180 : 0 }}>
-              <ChevronDown size={16} className="text-gray-400" />
-            </motion.div>
+            <ArrowRight size={16} className="text-gray-300 group-hover:text-green-600 group-hover:translate-x-1 transition-all" />
           </button>
-          
-          <AnimatePresence>
-            {showManagement && (
-              <motion.div 
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="grid grid-cols-1 gap-3 overflow-hidden"
-              >
-                {[
-                  { name: "Mariam Akter", role: "Managing Director", initial: "MA", color: "bg-emerald-500", phone: "8801XXXXXXXXX" },
-                  { name: "Mahmudul Hasan Shead", role: "CRM Manager", initial: "MS", color: "bg-blue-500", phone: "8801XXXXXXXXX" },
-                  { name: "MD Sujon Ahmed", role: "Accounts Manager", initial: "SA", color: "bg-orange-500", phone: "8801XXXXXXXXX" },
-                  { name: "Riyad Shakib", role: "Admin Manager", initial: "RS", color: "bg-purple-500", phone: "8801XXXXXXXXX" },
-                  { name: "Jannatul Ferdous", role: "Office Executive", initial: "JF", color: "bg-rose-500", phone: "8801XXXXXXXXX" }
-                ].map((leader, idx) => (
-                  <motion.div 
-                    key={idx} 
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="flex items-center justify-between p-4 bg-white rounded-[1.5rem] border border-gray-100 shadow-sm"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className={`w-10 h-10 rounded-xl ${leader.color} flex items-center justify-center text-white text-[10px] font-black shadow-sm`}>
-                        {leader.initial}
-                      </div>
-                      <div>
-                        <h4 className="text-[13px] font-black text-gray-900 leading-none">{leader.name}</h4>
-                        <p className="text-[10px] font-bold text-gray-400 uppercase mt-1 tracking-tight">{leader.role}</p>
-                      </div>
-                    </div>
-
-                    {/* WhatsApp Action Button */}
-                    <a 
-                      href={`https://wa.me/${leader.phone}`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="p-2.5 bg-green-500 text-white rounded-full hover:bg-green-600 transition-transform active:scale-90"
-                    >
-                      <MessageCircle size={16} />
-                    </a>
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
         
         {/* Footer Branding */}
@@ -196,8 +151,70 @@ export default function Home() {
     </motion.div>
   )}
 </AnimatePresence>
-</nav>
 
+{/* --- Management Modal (Popup) --- */}
+<AnimatePresence>
+  {isModalOpen && (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+      {/* Backdrop */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={() => setIsModalOpen(false)}
+        className="absolute inset-0 bg-black/40 backdrop-blur-md"
+      />
+
+      {/* Modal Card */}
+      <motion.div 
+        initial={{ scale: 0.9, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.9, opacity: 0, y: 20 }}
+        className="relative w-full max-w-sm bg-white rounded-[2.5rem] shadow-2xl overflow-hidden"
+      >
+        <div className="px-6 py-8">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-lg font-black text-gray-900 uppercase tracking-tight">Our Management</h3>
+            <button onClick={() => setIsModalOpen(false)} className="p-2 bg-gray-50 rounded-full text-gray-400">
+              <X size={20} />
+            </button>
+          </div>
+
+          <div className="space-y-3">
+            {[
+              { name: "Mariam Akter", role: "Managing Director", initial: "MA", color: "bg-emerald-500", phone: "8801XXXXXXXXX" },
+              { name: "Mahmudul Hasan Shead", role: "CRM Manager", initial: "MS", color: "bg-blue-500", phone: "8801XXXXXXXXX" },
+              { name: "MD Sujon Ahmed", role: "Accounts Manager", initial: "SA", color: "bg-orange-500", phone: "8801XXXXXXXXX" },
+              { name: "Riyad Shakib", role: "Admin Manager", initial: "RS", color: "bg-purple-500", phone: "8801XXXXXXXXX" },
+              { name: "Jannatul Ferdous", role: "Office Executive", initial: "JF", color: "bg-rose-500", phone: "8801XXXXXXXXX" }
+            ].map((leader, idx) => (
+              <div key={idx} className="flex items-center justify-between p-3 bg-gray-50/50 rounded-2xl border border-gray-100">
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-xl ${leader.color} flex items-center justify-center text-white text-[10px] font-black shadow-sm`}>
+                    {leader.initial}
+                  </div>
+                  <div>
+                    <h4 className="text-[13px] font-black text-gray-900 leading-none">{leader.name}</h4>
+                    <p className="text-[9px] font-bold text-gray-400 uppercase mt-1">{leader.role}</p>
+                  </div>
+                </div>
+                <a 
+                  href={`https://wa.me/${leader.phone}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="p-2 bg-green-500 text-white rounded-full hover:scale-110 transition-transform"
+                >
+                  <MessageCircle size={14} />
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  )}
+</AnimatePresence>
+</nav>
 
 
 
