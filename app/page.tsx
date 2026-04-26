@@ -17,6 +17,7 @@ const fadeInUp = {
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showManagement, setShowManagement] = useState(false);
   const [mount, setMount] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
@@ -81,87 +82,93 @@ export default function Home() {
     </div>
   </div>
 
-  {/* --- Mobile Menu Overlay --- */}
-  <AnimatePresence>
-    {isOpen && (
-      <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ opacity: 1, height: "auto" }}
-        exit={{ opacity: 0, height: 0 }}
-        transition={{ duration: 0.5, ease: "easeInOut" }}
-        className="md:hidden bg-white border-b border-gray-100 overflow-hidden"
-      >
-        <div className="px-6 py-8 space-y-8">
-          {/* 1. Navigation Links */}
-          <div className="flex flex-col gap-5">
-            <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">Menu</span>
-            <div className="flex flex-col gap-4 text-xl font-bold text-gray-800">
-              <a href="#" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Home</a>
-              <a href="#products" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Products</a>
-              <a href="#production" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Production</a>
-              <a href="#contact" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Contact</a>
-            </div>
-          </div>
 
-          <hr className="border-gray-100" />
 
-          {/* 2. Management Section (Click to toggle) */}
-          <div className="space-y-4">
-            <button 
-              onClick={() => setShowProcess(!showProcess)} 
-              className="w-full flex items-center justify-between text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] hover:text-green-600 transition"
-            >
-              <span>Ownership & Management</span>
-              <motion.div animate={{ rotate: showProcess ? 180 : 0 }}>
-                <ChevronDown size={14} />
-              </motion.div>
-            </button>
-            
-            <AnimatePresence>
-              {showProcess && (
-                <motion.div 
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="grid grid-cols-1 gap-3"
-                >
-                  {[
-                    { name: "Mariam Akter", role: "Managing Director", initial: "MA", color: "bg-emerald-500" },
-                    { name: "Mahmudul Hasan Shead", role: "Client Relationship Manager", initial: "MS", color: "bg-blue-500" },
-                    { name: "MD Sujon Ahmed", role: "Accounts Manager", initial: "SA", color: "bg-orange-500" },
-                    { name: "Riyad Shakib", role: "Admin Manager", initial: "RS", color: "bg-purple-500" },
-                    { name: "Jannatul Ferdous", role: "Office Executive", initial: "JF", color: "bg-rose-500" }
-                  ].map((leader, idx) => (
-                    <motion.div 
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.05 }}
-                      key={idx} 
-                      className="flex items-center gap-4 p-4 bg-gray-50/50 rounded-[1.5rem] border border-gray-100"
-                    >
-                      <div className={`w-10 h-10 rounded-xl ${leader.color} flex items-center justify-center text-white text-[10px] font-black shadow-sm`}>
-                        {leader.initial}
-                      </div>
-                      <div>
-                        <h4 className="text-[13px] font-black text-gray-900 leading-none">{leader.name}</h4>
-                        <p className="text-[10px] font-bold text-gray-400 uppercase mt-1 tracking-tight">{leader.role}</p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-          
-          <div className="text-center pt-4">
-             <p className="text-[9px] font-bold text-gray-300 uppercase tracking-widest">Bhai Bhai Food Factory</p>
+ {/* --- Mobile Menu Overlay --- */}
+<AnimatePresence>
+  {isOpen && (
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+      className="md:hidden bg-white border-b border-gray-100 overflow-hidden"
+    >
+      <div className="px-6 py-8 space-y-8">
+        
+        {/* 1. Navigation Links */}
+        <div className="flex flex-col gap-5">
+          <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">Menu</span>
+          <div className="flex flex-col gap-4 text-xl font-bold text-gray-800">
+            <a href="#" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Home</a>
+            <a href="#products" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Products</a>
+            <a href="#production" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Production</a>
+            <a href="#contact" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Contact</a>
           </div>
         </div>
-      </motion.div>
-    )}
-  </AnimatePresence>
-</nav>
 
+        <hr className="border-gray-100" />
+
+        {/* 2. Management Section (Fixed Logical Conflict) */}
+        <div className="space-y-4">
+          <button 
+            onClick={() => setShowManagement(!showManagement)} // টগল করার জন্য আলাদা স্টেট
+            className="w-full flex items-center justify-between text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] hover:text-green-600 transition outline-none"
+          >
+            <span>Ownership & Management</span>
+            <motion.div animate={{ rotate: showManagement ? 180 : 0 }}>
+              <ChevronDown size={14} />
+            </motion.div>
+          </button>
+          
+          <AnimatePresence>
+            {showManagement && ( // শুধুমাত্র ম্যানেজমেন্টের জন্য আলাদা কন্ডিশন
+              <motion.div 
+                initial={{ opacity: 0, y: -10, height: 0 }}
+                animate={{ opacity: 1, y: 0, height: "auto" }}
+                exit={{ opacity: 0, y: -10, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 gap-3 overflow-hidden"
+              >
+                {[
+                  { name: "Mariam Akter", role: "Managing Director", initial: "MA", color: "bg-emerald-500" },
+                  { name: "Mahmudul Hasan Shead", role: "Client Relationship Manager", initial: "MS", color: "bg-blue-500" },
+                  { name: "MD Sujon Ahmed", role: "Accounts Manager", initial: "SA", color: "bg-orange-500" },
+                  { name: "Riyad Shakib", role: "Admin Manager", initial: "RS", color: "bg-purple-500" },
+                  { name: "Jannatul Ferdous", role: "Office Executive", initial: "JF", color: "bg-rose-500" }
+                ].map((leader, idx) => (
+                  <motion.div 
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                    key={idx} 
+                    className="flex items-center gap-4 p-4 bg-gray-50/50 rounded-[1.5rem] border border-gray-100 shadow-sm"
+                  >
+                    <div className={`w-10 h-10 rounded-xl ${leader.color} flex items-center justify-center text-white text-[10px] font-black shadow-inner`}>
+                      {leader.initial}
+                    </div>
+                    <div>
+                      <h4 className="text-[13px] font-black text-gray-900 leading-none">{leader.name}</h4>
+                      <p className="text-[10px] font-bold text-gray-400 uppercase mt-1 tracking-tight">{leader.role}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+        
+        {/* Footer Branding inside Menu */}
+        <div className="text-center pt-4 border-t border-gray-50">
+           <p className="text-[9px] font-bold text-gray-300 uppercase tracking-widest italic">
+             Bhai Bhai Food Factory • Purity Guaranteed
+           </p>
+        </div>
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
+</nav>
 
 
 
