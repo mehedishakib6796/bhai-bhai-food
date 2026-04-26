@@ -213,54 +213,98 @@ const [showMoreImages, setShowMoreImages] = useState(false);
 
 
 
-      {/* --- Hero Section --- */}
-      <section className="relative h-screen flex items-center justify-center">
-        <div className="absolute inset-0 z-0">
-          <Image src="/hero-bg.jpg" alt="Background" fill className="object-cover" priority />
-          <div className="absolute inset-0 bg-black/50 z-10" /> 
-        </div>
-        <div className="relative z-20 text-center text-white px-4 max-w-4xl">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            viewport={{ once: false }}
-            className="text-5xl md:text-8xl font-black leading-tight uppercase tracking-tighter"
-          >
-            Pure <span className="text-green-400">&</span> Healthy
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }} 
-            whileInView={{ opacity: 0.8 }} 
-            viewport={{ once: false }}
-            className="mt-4 text-xl md:text-2xl font-medium opacity-80"
-          >
-            Gazipur's Finest Puffed & Flattened Rice
-          </motion.p>
-          <div className="mt-10 flex flex-col md:flex-row gap-5 justify-center font-bold">
-            
-            {/* --- Updated WhatsApp Order Button --- */}
-            <motion.a 
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1 }} 
-              whileTap={{ scale: 0.9 }}
-              className="bg-green-600 hover:bg-green-700 text-white px-12 py-4 rounded-full text-lg shadow-2xl uppercase tracking-widest transition flex items-center justify-center cursor-pointer"
-            >
-              Order Now
-            </motion.a>
+     {/* --- Hero Section --- */}
+<section className="relative h-screen flex items-center justify-center overflow-hidden">
+  {/* Background Image Animation */}
+  <motion.div 
+    initial={{ scale: 1.2, opacity: 0 }}
+    animate={{ scale: 1, opacity: 1 }}
+    transition={{ duration: 1.5, ease: "easeOut" }}
+    className="absolute inset-0 z-0"
+  >
+    <Image 
+      src="/hero-bg.jpg" 
+      alt="Background" 
+      fill 
+      className="object-cover" 
+      priority 
+    />
+    <div className="absolute inset-0 bg-black/50 z-10" /> 
+  </motion.div>
 
-            <motion.a 
-              whileHover={{ scale: 1.1 }} 
-              whileTap={{ scale: 0.9 }}
-              href="#contact" 
-              className="border-2 border-white text-white px-12 py-4 rounded-full text-lg hover:bg-white hover:text-black transition flex items-center justify-center"
-            >
-              Contact Us
-            </motion.a>
-          </div>
-        </div>
-      </section>
+  {/* Content Container with Stagger Effect */}
+  <motion.div 
+    initial="hidden"
+    animate="show"
+    variants={{
+      hidden: { opacity: 0 },
+      show: {
+        opacity: 1,
+        transition: {
+          staggerChildren: 0.2, // লেখাগুলো একটার পর একটা আসার গ্যাপ
+          delayChildren: 0.5    // ব্যাকগ্রাউন্ড আসার কিছুক্ষণ পর লেখা শুরু হবে
+        }
+      }
+    }}
+    className="relative z-20 text-center text-white px-4 max-w-4xl"
+  >
+    {/* Title Animation */}
+    <motion.h1 
+      variants={{
+        hidden: { opacity: 0, y: 30 },
+        show: { opacity: 1, y: 0 }
+      }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="text-5xl md:text-8xl font-black leading-tight uppercase tracking-tighter"
+    >
+      Pure <span className="text-green-400">&</span> Healthy
+    </motion.h1>
+
+    {/* Subtitle Animation */}
+    <motion.p 
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 0.8, y: 0 }
+      }}
+      transition={{ duration: 0.8 }}
+      className="mt-4 text-xl md:text-2xl font-medium"
+    >
+      Gazipur's Finest Puffed & Flattened Rice
+    </motion.p>
+
+    {/* Buttons Animation */}
+    <motion.div 
+      variants={{
+        hidden: { opacity: 0, scale: 0.9 },
+        show: { opacity: 1, scale: 1 }
+      }}
+      transition={{ duration: 0.5 }}
+      className="mt-10 flex flex-col md:flex-row gap-5 justify-center font-bold"
+    >
+      {/* WhatsApp Order Button */}
+      <motion.a 
+        href={whatsappLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        whileHover={{ scale: 1.05 }} 
+        whileTap={{ scale: 0.95 }}
+        className="bg-green-600 hover:bg-green-700 text-white px-12 py-4 rounded-full text-lg shadow-2xl uppercase tracking-widest transition flex items-center justify-center cursor-pointer"
+      >
+        Order Now
+      </motion.a>
+
+      {/* Contact Button */}
+      <motion.a 
+        href="#contact" 
+        whileHover={{ scale: 1.05, backgroundColor: "white", color: "black" }} 
+        whileTap={{ scale: 0.95 }}
+        className="border-2 border-white text-white px-12 py-4 rounded-full text-lg transition flex items-center justify-center"
+      >
+        Contact Us
+      </motion.a>
+    </motion.div>
+  </motion.div>
+</section>
 
 
 {/* --- Modern Overlap About Section --- */}
