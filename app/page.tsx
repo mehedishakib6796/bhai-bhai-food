@@ -705,6 +705,92 @@ export default function Home() {
 </section>
 
 
+
+{/* --- Upgraded Production Staff Section --- */}
+<div className="space-y-6 mt-12 px-2">
+  <div className="flex items-center justify-between">
+    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-50 text-orange-700 border border-orange-100 font-black text-[10px] uppercase tracking-widest">
+      <span className="relative flex h-2 w-2">
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+        <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+      </span>
+      Production Experts
+    </div>
+  </div>
+
+  <div className="grid grid-cols-1 gap-5">
+    {[
+      { name: "Md. Mosaddek Hossain", role: "Quality Controller", experience: "10+ Years", initial: "MH", color: "from-orange-400 to-orange-600" },
+      { name: "Aziz Ahmed", role: "Machinery Expert", experience: "7 Years", initial: "AA", color: "from-amber-400 to-amber-600" },
+      { name: "Rahim Khan", role: "Packaging Supervisor", experience: "5 Years", initial: "RK", color: "from-yellow-400 to-yellow-600" }
+    ].map((staff, index) => (
+      <motion.div 
+        key={index}
+        whileHover={{ x: 10 }}
+        className="group relative bg-white p-5 rounded-[2.5rem] border border-gray-100 flex items-center gap-5 shadow-sm hover:shadow-xl hover:shadow-orange-100/50 transition-all duration-500"
+      >
+        {/* Profile Avatar with Gradient Background */}
+        <div className={`relative w-16 h-16 rounded-2xl bg-gradient-to-br ${staff.color} flex items-center justify-center text-white font-black text-lg shadow-lg transform group-hover:rotate-6 transition-transform duration-500`}>
+          {staff.initial}
+          {/* Decorative Ring */}
+          <div className="absolute inset-1 border-2 border-white/20 rounded-xl" />
+        </div>
+
+        <div className="flex-1">
+          <div className="flex items-start justify-between">
+            <div>
+              <h4 className="text-md font-black text-gray-900 leading-tight group-hover:text-orange-600 transition-colors">
+                {staff.name}
+              </h4>
+              <p className="text-gray-500 text-xs font-bold mt-0.5 tracking-wide">
+                {staff.role}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-3 flex items-center gap-3">
+            <div className="flex items-center gap-1.5 px-3 py-1 bg-gray-50 rounded-full border border-gray-100">
+              <Star size={10} className="text-orange-500 fill-orange-500" />
+              <span className="text-[10px] font-black text-gray-600 uppercase tracking-tighter">
+                {staff.experience} Exp
+              </span>
+            </div>
+            
+            {/* Status Indicator */}
+            <div className="flex items-center gap-1">
+              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+              <span className="text-[9px] font-bold text-gray-400 uppercase">On Duty</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Floating Arrow Icon (Only visible on hover or mobile) */}
+        <div className="opacity-0 group-hover:opacity-100 transition-opacity p-2 bg-orange-50 rounded-full text-orange-600">
+          <ArrowRight size={16} />
+        </div>
+
+        {/* Background Decorative Pattern */}
+        <div className="absolute -right-2 -bottom-2 w-16 h-16 bg-gray-50 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+      </motion.div>
+    ))}
+  </div>
+
+  {/* Summary Footer */}
+  <div className="bg-orange-600 p-6 rounded-[2.5rem] text-white overflow-hidden relative group">
+    <div className="relative z-10 flex items-center justify-between">
+      <div>
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Total Strength</p>
+        <h4 className="text-2xl font-black">100+ Skilled Workers</h4>
+      </div>
+      <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl">
+        <Factory size={24} />
+      </div>
+    </div>
+    {/* Abstract background shapes */}
+    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl transition-transform group-hover:scale-150 duration-700" />
+  </div>
+</div>
+
      {/* --- CTA Section --- */}
 <section className="py-24 px-6 bg-white">
   <motion.div 
@@ -796,10 +882,10 @@ export default function Home() {
         </div>
 
         <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-gray-800 text-center">
-          <div className="text-gray-600 text-[10px] font-black uppercase tracking-[0.5em]">
-            © {new Date().getFullYear()} Bhai Bhai Food Factory. Pure & Organic Tradition.
-          </div>
-        </div>
+  <div className="text-gray-600 text-[10px] font-black uppercase tracking-[0.5em]">
+    © 2023 Bhai Bhai Food Factory. Pure & Organic Tradition.
+  </div>
+</div>
       </footer>
 
       {/* WhatsApp Floating Button */}
