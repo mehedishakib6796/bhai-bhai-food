@@ -5,6 +5,7 @@ import Image from "next/image";
 
 
 
+
 import { 
   Menu, X, Phone, MapPin, Star, 
   MessageSquare, ArrowRight, Factory, Mail,
@@ -26,6 +27,7 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
   const [showProcess, setShowProcess] = useState(false);
 const [isModalOpen, setIsModalOpen] = useState(false);
+const [isProductionModalOpen, setIsProductionModalOpen] = useState(false);
 const [showMoreImages, setShowMoreImages] = useState(false);
   const phoneNumber = "+8801711443830"; 
   const emailAddress = "Bhaibhaifoodproducts1990@gmail.com";
@@ -60,156 +62,128 @@ const [showMoreImages, setShowMoreImages] = useState(false);
   return (
     <div className="relative min-h-screen bg-white font-sans scroll-smooth overflow-x-hidden">
       
+
+
+
      
-     
-    {/* --- Navbar --- */}
-<nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100">
-  <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+{/* --- Navbar --- */}
+<nav className="fixed top-0 w-full z-[60] bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100">
+  <div className="max-w-full mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
+    
+    {/* 1. Logo Section */}
     <div className="flex items-center gap-2">
-      <div className="text-green-600 font-bold text-2xl flex items-center gap-1">
-        <span className="text-3xl">🍃</span>
-        <span className="text-green-700">Bhai Bhai</span>
-        <span className="text-orange-700 font-black">Food</span>
+      <div className="text-green-600 font-bold text-3xl flex items-center gap-2">
+        <span className="text-4xl">🍃</span>
+        <div className="flex flex-col md:flex-row md:gap-2 leading-none">
+          <span className="text-green-700">Bhai Bhai</span>
+          <span className="text-orange-700 font-black">Food</span>
+        </div>
       </div>
     </div>
 
-    <div className="hidden md:flex gap-10 font-semibold text-gray-700">
-      <a href="#" className="hover:text-green-600 transition">Home</a>
-      <a href="#products" className="hover:text-green-600 transition">Products</a>
-      <a href="#production" className="hover:text-green-600 transition">Production</a>
-      <a href="#contact" className="hover:text-green-600 transition">Contact</a>
+    {/* 2. Laptop/Desktop Navigation */}
+    <div className="hidden md:flex items-center gap-12 font-bold text-gray-800 text-lg">
+      <a href="#" className="hover:text-green-600 transition-colors">Home</a>
+      <a href="#products" className="hover:text-green-600 transition-colors">Products</a>
+      <a href="#production" className="hover:text-green-600 transition-colors">Production</a>
+      <a href="#contact" className="hover:text-green-600 transition-colors">Contact</a>
+      
+      <button 
+        onClick={() => setIsModalOpen(true)} 
+        className="flex items-center gap-2 hover:text-green-600 transition-colors font-bold"
+      >
+        Owners
+      </button>
     </div>
 
-    {/* Mobile Toggle Button */}
+    {/* 3. Mobile Toggle Button */}
     <div className="md:hidden text-gray-800 cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
-      {isOpen ? <X size={30} /> : <Menu size={30} />}
+      {isOpen ? <X size={35} /> : <Menu size={35} />}
     </div>
   </div>
 
+  {/* --- Right Side Management Drawer --- */}
+  <AnimatePresence>
+    {isModalOpen && (
+      <div className="fixed inset-0 z-[100]">
+        {/* Backdrop: এটি পুরো স্ক্রিন জুড়ে থাকবে এবং হিরো সেকশনকে ঢেকে দেবে */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setIsModalOpen(false)}
+          className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        />
 
-
-
-
-
-
-{/* --- Mobile Menu Overlay --- */}
-<AnimatePresence>
-  {isOpen && (
-    <motion.div
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: "auto" }}
-      exit={{ opacity: 0, height: 0 }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="md:hidden bg-white border-b border-gray-100 overflow-hidden"
-    >
-      <div className="px-6 py-8 space-y-8">
-        
-        {/* 1. Navigation Links */}
-        <div className="flex flex-col gap-5">
-          <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">Menu</span>
-          <div className="flex flex-col gap-4 text-xl font-bold text-gray-800">
-            <a href="#" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Home</a>
-            <a href="#products" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Products</a>
-            <a href="#production" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Production</a>
-            <a href="#contact" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors">Contact</a>
-          </div>
-        </div>
-
-        <hr className="border-gray-100" />
-
-        {/* 2. Management Section with Popup Button */}
-        <div className="space-y-4">
-          <button 
-            type="button"
-            onClick={() => setIsModalOpen(true)} // পপআপ ওপেন করার জন্য
-            className="w-full flex items-center justify-between p-5 bg-gradient-to-r from-gray-50 to-white border border-gray-100 rounded-[2rem] group transition-all active:scale-95 shadow-sm"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 bg-green-600 text-white rounded-xl flex items-center justify-center shadow-lg shadow-green-100">
-                <Users size={18} />
-              </div>
-              <div className="text-left">
-                <span className="block text-[11px] font-black text-gray-800 uppercase tracking-wider">Ownership & Management</span>
-                <span className="block text-[9px] font-bold text-gray-400 uppercase mt-0.5 tracking-widest">Click to view details</span>
-              </div>
+        {/* Drawer Content: এটি ডান দিক থেকে হিরো সেকশনের উপর দিয়ে আসবে */}
+        <motion.div 
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "100%" }}
+          transition={{ type: "tween", duration: 0.3 }}
+          className="absolute right-0 top-0 w-full max-w-sm md:max-w-md bg-white h-screen shadow-2xl flex flex-col"
+        >
+          {/* Drawer Header */}
+          <div className="p-8 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-10">
+            <div>
+              <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tight">Owner Team</h3>
+              <p className="text-[10px] font-bold text-green-600 uppercase tracking-widest mt-1">Bhai Bhai Food Products</p>
             </div>
-            <ArrowRight size={16} className="text-gray-300 group-hover:text-green-600 group-hover:translate-x-1 transition-all" />
-          </button>
-        </div>
-        
-        {/* Footer Branding */}
-        <div className="text-center pt-4 border-t border-gray-50">
-           <p className="text-[9px] font-bold text-gray-300 uppercase tracking-widest italic">
-             Bhai Bhai Food Product • Purity Guaranteed
-           </p>
-        </div>
-      </div>
-    </motion.div>
-  )}
-</AnimatePresence>
-
-{/* --- Management Modal (Popup) --- */}
-<AnimatePresence>
-  {isModalOpen && (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
-      {/* Backdrop */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={() => setIsModalOpen(false)}
-        className="absolute inset-0 bg-black/40 backdrop-blur-md"
-      />
-
-      {/* Modal Card */}
-      <motion.div 
-        initial={{ scale: 0.9, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.9, opacity: 0, y: 20 }}
-        className="relative w-full max-w-sm bg-white rounded-[2.5rem] shadow-2xl overflow-hidden"
-      >
-        <div className="px-6 py-8">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-black text-gray-900 uppercase tracking-tight">Our Management</h3>
-            <button onClick={() => setIsModalOpen(false)} className="p-2 bg-gray-50 rounded-full text-gray-400">
-              <X size={20} />
+            <button 
+              onClick={() => setIsModalOpen(false)} 
+              className="p-2 bg-gray-50 rounded-full text-gray-400 hover:text-red-500 transition-colors"
+            >
+              <X size={24} />
             </button>
           </div>
 
-          <div className="space-y-3">
+          {/* Member List Section: স্ক্রলবার ছাড়াই সব একবারে দেখাবে */}
+          <div className="flex-1 p-6 space-y-4 bg-white overflow-hidden">
             {[
               { name: "Mariam Akter", role: "Managing Director", initial: "MA", color: "bg-emerald-500", phone: "8801812139217" },
-              { name: "MD. Mahmudul Hasan Shead", role: "CRM Manager", initial: "MS", color: "bg-blue-500", phone: "8801985126785" },
+              { name: "MD. Mahmudul Hasan Shead", role: "Customers Relationship Manager", initial: "MS", color: "bg-blue-500", phone: "8801985126785" },
               { name: "Anwar Hossain Sojan", role: "Accounts Manager", initial: "SA", color: "bg-orange-500", phone: "8801935305068" },
-              { name: "Riyad Hasan Shakil", role: "Admin Manager", initial: "RS", color: "bg-purple-500", phone: "8801968093300" },
-              { name: "Jannatul Ferdous", role: "Office Executive", initial: "JF", color: "bg-rose-500", phone: "8801708056878" }
+              { name: "Riyad Hasan Shakil", role: "Admin Manager", initial: "RS", color: "bg-purple-500", phone: "8801968093300" }
             ].map((leader, idx) => (
-              <div key={idx} className="flex items-center justify-between p-3 bg-gray-50/50 rounded-2xl border border-gray-100">
-                <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-xl ${leader.color} flex items-center justify-center text-white text-[10px] font-black shadow-sm`}>
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 * idx }}
+                className="flex items-center justify-between p-4 bg-gray-50/80 rounded-2xl border border-gray-100 hover:bg-white hover:shadow-xl hover:shadow-green-900/5 transition-all group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className={`w-14 h-14 rounded-2xl ${leader.color} flex items-center justify-center text-white text-xl font-black shadow-md`}>
                     {leader.initial}
                   </div>
                   <div>
-                    <h4 className="text-[13px] font-black text-gray-900 leading-none">{leader.name}</h4>
-                    <p className="text-[9px] font-bold text-gray-400 uppercase mt-1">{leader.role}</p>
+                    <h4 className="text-lg font-bold text-gray-900 leading-tight">{leader.name}</h4>
+                    <p className="text-[10px] font-black text-gray-400 uppercase mt-1 tracking-wider">{leader.role}</p>
                   </div>
                 </div>
+                
                 <a 
                   href={`https://wa.me/${leader.phone}`} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="p-2 bg-green-500 text-white rounded-full hover:scale-110 transition-transform"
+                  className="p-3 bg-green-500 text-white rounded-xl hover:scale-110 active:scale-95 transition-all shadow-md shadow-green-200"
                 >
-                  <MessageCircle size={14} />
+                  <MessageCircle size={20} />
                 </a>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
-      </motion.div>
-    </div>
-  )}
-</AnimatePresence>
+
+          {/* Footer inside Drawer */}
+          <div className="p-8 border-t border-gray-50 text-center bg-gray-50/30">
+             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
+              100% Purity Guaranteed 
+             </p>
+          </div>
+        </motion.div>
+      </div>
+    )}
+  </AnimatePresence>
 </nav>
 
 
@@ -870,90 +844,161 @@ const [showMoreImages, setShowMoreImages] = useState(false);
 </section>
 
 
+{/* --- Upgraded Production Experts Section with Summary Card --- */}
+<div className="mt-12 px-2 relative">
+  {/* ১. মূল বাটন */}
+  <button 
+    onClick={() => setIsProductionModalOpen(true)}
+    className="group relative w-full overflow-hidden rounded-[3.5rem] bg-orange-50/30 border border-orange-100/50 p-2 shadow-sm transition-all hover:shadow-[0_20px_50px_rgba(255,115,0,0.1)] active:scale-[0.98]"
+  >
+    <div className="relative flex items-center justify-between p-10 md:p-12 bg-white/60 backdrop-blur-sm rounded-[3rem] transition-colors group-hover:bg-white/80">
+      
+      <div className="hidden md:flex items-center justify-center w-20 h-20 rounded-3xl bg-white border border-orange-50 text-orange-400 group-hover:bg-orange-600 group-hover:text-white transition-all duration-500 shadow-sm">
+        <Users size={40} />
+      </div>
 
-{/* --- Upgraded Production Staff Section --- */}
-<div className="space-y-6 mt-12 px-2">
-  <div className="flex items-center justify-between">
-    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-50 text-orange-700 border border-orange-100 font-black text-[10px] uppercase tracking-widest">
-      <span className="relative flex h-2 w-2">
-        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-        <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
-      </span>
-      Production Experts
-    </div>
-  </div>
-
-  <div className="grid grid-cols-1 gap-5">
-    {[
-      { name: "Md. Mosaddek Hossain", role: "Quality Controller", experience: "10+ Years", initial: "MH", color: "from-orange-400 to-orange-600" },
-      { name: "Aziz Ahmed", role: "Machinery Expert", experience: "7 Years", initial: "AA", color: "from-amber-400 to-amber-600" },
-      { name: "Rahim Khan", role: "Packaging Supervisor", experience: "5 Years", initial: "RK", color: "from-yellow-400 to-yellow-600" }
-    ].map((staff, index) => (
-      <motion.div 
-        key={index}
-        whileHover={{ x: 10 }}
-        className="group relative bg-white p-5 rounded-[2.5rem] border border-gray-100 flex items-center gap-5 shadow-sm hover:shadow-xl hover:shadow-orange-100/50 transition-all duration-500"
-      >
-        {/* Profile Avatar with Gradient Background */}
-        <div className={`relative w-16 h-16 rounded-2xl bg-gradient-to-br ${staff.color} flex items-center justify-center text-white font-black text-lg shadow-lg transform group-hover:rotate-6 transition-transform duration-500`}>
-          {staff.initial}
-          {/* Decorative Ring */}
-          <div className="absolute inset-1 border-2 border-white/20 rounded-xl" />
+      <div className="flex-1 text-center px-6">
+        <h4 className="text-3xl md:text-4xl font-black text-gray-800 leading-none uppercase tracking-tighter transition-transform group-hover:scale-105 duration-500">
+          Production Experts <br />
+          <span className="text-orange-500/80 drop-shadow-sm">& Employees</span>
+        </h4>
+        <div className="mt-4 inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/50 border border-orange-50">
+          <span className="flex h-2 w-2 relative">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+          </span>
+          <p className="text-gray-400 text-[10px] md:text-xs font-black uppercase tracking-widest">
+            100+ workers • On Duty
+          </p>
         </div>
+      </div>
 
-        <div className="flex-1">
-          <div className="flex items-start justify-between">
+      <div className="flex flex-col items-center gap-2 pl-6 border-l border-orange-50">
+        <div className="relative">
+          <div className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-400 shadow-sm group-hover:bg-orange-600 group-hover:text-white group-hover:rotate-[360deg] transition-all duration-700">
+            <ArrowRight size={24} />
+          </div>
+        </div>
+        <div className="px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-[8px] font-black uppercase tracking-[0.2em]">
+          Explore
+        </div>
+      </div>
+
+      <div className="absolute -left-10 -top-10 w-40 h-40 bg-orange-50/20 rounded-full blur-3xl" />
+    </div>
+  </button>
+
+  {/* ২. ড্রয়ার সেকশন */}
+  <AnimatePresence>
+    {isProductionModalOpen && (
+      <div className="fixed inset-0 z-[999] flex justify-end">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setIsProductionModalOpen(false)}
+          className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        />
+
+        <motion.div 
+          initial={{ x: '100%' }}
+          animate={{ x: 0 }}
+          exit={{ x: '100%' }}
+          transition={{ type: 'spring', damping: 28, stiffness: 220 }}
+          className="relative w-full max-w-xl bg-white h-full shadow-2xl flex flex-col z-[1000] overflow-hidden rounded-l-[2rem] md:rounded-l-[3rem]"
+        >
+          {/* Header */}
+          <div className="p-8 md:p-10 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
             <div>
-              <h4 className="text-md font-black text-gray-900 leading-tight group-hover:text-orange-600 transition-colors">
-                {staff.name}
-              </h4>
-              <p className="text-gray-500 text-xs font-bold mt-0.5 tracking-wide">
-                {staff.role}
+              <h3 className="text-2xl md:text-3xl font-black text-gray-900 uppercase tracking-tight leading-none">Factory Workforce</h3>
+              <p className="text-[10px] md:text-xs font-bold text-orange-600 uppercase tracking-widest mt-2">
+                 Production Specialists & Employees
               </p>
             </div>
+            <button 
+              onClick={() => setIsProductionModalOpen(false)}
+              className="p-3 bg-white rounded-2xl text-gray-400 hover:text-red-500 hover:rotate-90 transition-all duration-300 shadow-sm"
+            >
+              <X size={22} />
+            </button>
           </div>
 
-          <div className="mt-3 flex items-center gap-3">
-            <div className="flex items-center gap-1.5 px-3 py-1 bg-gray-50 rounded-full border border-gray-100">
-              <Star size={10} className="text-orange-500 fill-orange-500" />
-              <span className="text-[10px] font-black text-gray-600 uppercase tracking-tighter">
-                {staff.experience} Exp
-              </span>
-            </div>
-            
-            {/* Status Indicator */}
-            <div className="flex items-center gap-1">
-              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-              <span className="text-[9px] font-bold text-gray-400 uppercase">On Duty</span>
-            </div>
+          {/* Employee List */}
+          <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-5 bg-white scrollbar-hide">
+            {[
+              { name: "Jannatul Ferdous", role: "HR Admin", exp: "11+ Years Experience", initial: "JF", gradient: "from-orange-400 to-red-500" },
+              { name: "Mehedi Hasan", role: "Quality Controller", exp: "10+ Years Experience", initial: "MH", gradient: "from-orange-400 to-red-500" },
+              { name: "Aziz Ahmed", role: "Machinery Expert", exp: "7 Years Experience", initial: "AA", gradient: "from-amber-400 to-orange-500" },
+              { name: "Rahim Khan", role: "Shift Supervisor", exp: "8 Years Experience", initial: "RK", gradient: "from-orange-500 to-orange-600" },
+              { name: "Kamrul Islam", role: "Packaging Head", exp: "5 Years Experience", initial: "KI", gradient: "from-orange-400 to-amber-500" },
+              { name: "Sujon Mia", role: "Inventory Manager", exp: "4 Years Experience", initial: "SM", gradient: "from-gray-600 to-gray-800" },
+              { name: "Abul Kashem", role: "Machine Operators.", exp: "9 Years Experience", initial: "AK", gradient: "from-sky-400 to-blue-500" },
+              { name: "Ariful Hoque", role: "Shift Supervisor", exp: "6 Years Experience", initial: "AH", gradient: "from-emerald-400 to-teal-600" },
+              { name: "Selim Reza", role: "Hygiene Inspector", exp: "5 Years Experience", initial: "SR", gradient: "from-rose-400 to-rose-500" },
+              { name: "Jasim Uddin", role: "Technical Expert", exp: "12 Years Experience", initial: "JU", gradient: "from-indigo-400 to-purple-600" },
+              { name: "Mizanur Rahman", role: "Labeling Staff", exp: "7 Years Experience", initial: "MR", gradient: "from-red-500 to-red-700" },
+              { name: "Habib Ullah", role: "Inventory Manage", exp: "6 Years Experience", initial: "HU", gradient: "from-orange-400 to-amber-500" },
+              { name: "Zubayer Ahmed", role: "Store Keeper", exp: "4 Years Experience", initial: "ZA", gradient: "from-lime-400 to-green-500" },
+            ].map((staff, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: idx * 0.04 }}
+                className="group flex items-center gap-6 p-6 bg-gray-50/30 rounded-[2.5rem] border border-gray-100/50 hover:bg-white hover:shadow-xl hover:border-orange-100 transition-all duration-300"
+              >
+                <div className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-gradient-to-br ${staff.gradient} flex items-center justify-center text-white font-black text-lg md:text-xl shadow-md group-hover:scale-105 transition-transform`}>
+                  {staff.initial}
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-md md:text-lg font-black text-gray-800 group-hover:text-orange-600 transition-colors">
+                    {staff.name}
+                  </h4>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                    <p className="text-[10px] font-bold text-orange-500 uppercase bg-orange-50/50 px-2 py-0.5 rounded-full self-start">
+                      {staff.role}
+                    </p>
+                    <div className="flex items-center gap-1 text-gray-400">
+                      <Star size={12} className="fill-amber-400 text-amber-400 border-none" />
+                      <span className="text-[10px] font-bold uppercase tracking-tight">{staff.exp}</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+
+            {/* --- Summary Card for General Workers --- */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="mt-8 p-8 rounded-[3rem] bg-gradient-to-br from-orange-600 to-orange-700 text-center shadow-xl shadow-orange-200"
+            >
+              <div className="inline-flex p-3 rounded-2xl bg-white/20 mb-4">
+                <Users className="text-white" size={28} />
+              </div>
+              <h3 className="text-2xl font-black text-white uppercase tracking-tighter leading-none">
+                90+ General Workers
+              </h3>
+              <p className="text-[10px] font-bold text-orange-100 uppercase tracking-[0.2em] mt-2">
+                Professional Factory Support Team
+              </p>
+              <div className="mt-4 flex justify-center gap-1">
+                {[1, 2, 3, 4, 5].map((s) => (
+                  <Star key={s} size={10} className="fill-white text-white opacity-50" />
+                ))}
+              </div>
+            </motion.div>
           </div>
-        </div>
 
-        {/* Floating Arrow Icon (Only visible on hover or mobile) */}
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity p-2 bg-orange-50 rounded-full text-orange-600">
-          <ArrowRight size={16} />
-        </div>
-
-        {/* Background Decorative Pattern */}
-        <div className="absolute -right-2 -bottom-2 w-16 h-16 bg-gray-50 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-      </motion.div>
-    ))}
-  </div>
-
-  {/* Summary Footer */}
-  <div className="bg-orange-600 p-6 rounded-[2.5rem] text-white overflow-hidden relative group">
-    <div className="relative z-10 flex items-center justify-between">
-      <div>
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Total Strength</p>
-        <h4 className="text-2xl font-black">100+ Skilled Workers</h4>
+          {/* Footer */}
+          <div className="p-8 bg-gray-900 text-center">
+            <p className="text-[10px] font-black text-orange-500/80 uppercase tracking-[0.4em]">Vhai Vhai Food</p>
+          </div>
+        </motion.div>
       </div>
-      <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl">
-        <Factory size={24} />
-      </div>
-    </div>
-    {/* Abstract background shapes */}
-    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl transition-transform group-hover:scale-150 duration-700" />
-  </div>
+    )}
+  </AnimatePresence>
 </div>
 
 
