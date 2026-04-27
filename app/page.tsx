@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 
+
 import { 
   Menu, X, Phone, MapPin, Star, 
   MessageSquare, ArrowRight, Factory, Mail,
