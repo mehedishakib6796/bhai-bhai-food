@@ -13,8 +13,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  // ১. এটি সাধারণ গুগল সার্চের জন্য (Google Search)
   title: "Bhai Bhai Food Products | Gazipur's Finest Organic Staples",
-  description: "Discover the heritage of Gazipur with Bhai Bhai Food Products. From crunchy Puffed Rice (Muri) to nutrient-rich Flattened Rice (Chira), we bring 100% natural and field-fresh organic staples directly to your kitchen. Taste the purity of tradition in every bite.",
+  description: "Experience the purity of Gazipur with Bhai Bhai Food Products. We provide 100% natural Puffed Rice (Muri), Flattened Rice (Chira), and organic food directly from the field to your home.",
+  
+  // ২. এটি ফেসবুক, হোয়াটসঅ্যাপ এবং ইমেজের জন্য (Social Media)
+  openGraph: {
+    title: "Bhai Bhai Food Products - Healthy & Organic",
+    description: "Traditional and 100% organic food products from Gazipur. Order fresh Muri, Chira and more.",
+    url: "https://bhaibhaifoodproducts.com",
+    siteName: "Bhai Bhai Food Products",
+    images: [
+      {
+        url: "/muri.png", // তোমার public ফোল্ডারে থাকা ভালো একটি ছবির নাম এখানে দাও
+        width: 1200,
+        height: 630,
+        alt: "Fresh and crunchy Puffed Rice packet by Bhai Bhai Food",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
