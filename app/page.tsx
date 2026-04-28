@@ -2,10 +2,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-
-
-
-
 import { 
   Menu, X, Phone, MapPin, Star, 
   MessageSquare, ArrowRight, Factory, Mail,
@@ -30,7 +26,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 const [isProductionModalOpen, setIsProductionModalOpen] = useState(false);
 const [showMoreImages, setShowMoreImages] = useState(false);
   const phoneNumber = "+8801711443830"; 
-  const emailAddress = "Bhaibhaifoodproducts1990@gmail.com";
+  const emailAddress = "info@bhaibhaifoodproducts.com";
   const whatsappLink = `https://wa.me/${phoneNumber.replace('+', '')}`;
   const callLink = `tel:${phoneNumber}`;
 
@@ -102,11 +98,40 @@ const [showMoreImages, setShowMoreImages] = useState(false);
     </div>
   </div>
 
-  {/* --- Right Side Management Drawer --- */}
+  {/* --- 4. Mobile Menu Drawer (নতুন অংশ) --- */}
+  <AnimatePresence>
+    {isOpen && (
+      <motion.div
+        initial={{ opacity: 0, height: 0 }}
+        animate={{ opacity: 1, height: "auto" }}
+        exit={{ opacity: 0, height: 0 }}
+        className="md:hidden bg-white border-b border-gray-100 overflow-hidden"
+      >
+        <div className="flex flex-col p-6 space-y-4 font-bold text-gray-800 text-lg">
+          <a href="#" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors py-2 border-b border-gray-50">Home</a>
+          <a href="#products" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors py-2 border-b border-gray-50">Products</a>
+          <a href="#production" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors py-2 border-b border-gray-50">Production</a>
+          <a href="#contact" onClick={() => setIsOpen(false)} className="hover:text-green-600 transition-colors py-2 border-b border-gray-50">Contact</a>
+          
+          <button 
+            onClick={() => {
+              setIsOpen(false);
+              setIsModalOpen(true);
+            }} 
+            className="flex items-center justify-between w-full text-green-700 font-black pt-2"
+          >
+            <span>Owners Info</span>
+            <span className="text-2xl">→</span>
+          </button>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+
+  {/* --- Right Side Management Drawer (Owners) --- */}
   <AnimatePresence>
     {isModalOpen && (
       <div className="fixed inset-0 z-[100]">
-        {/* Backdrop: এটি পুরো স্ক্রিন জুড়ে থাকবে এবং হিরো সেকশনকে ঢেকে দেবে */}
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -115,7 +140,6 @@ const [showMoreImages, setShowMoreImages] = useState(false);
           className="absolute inset-0 bg-black/40 backdrop-blur-sm"
         />
 
-        {/* Drawer Content: এটি ডান দিক থেকে হিরো সেকশনের উপর দিয়ে আসবে */}
         <motion.div 
           initial={{ x: "100%" }}
           animate={{ x: 0 }}
@@ -123,10 +147,9 @@ const [showMoreImages, setShowMoreImages] = useState(false);
           transition={{ type: "tween", duration: 0.3 }}
           className="absolute right-0 top-0 w-full max-w-sm md:max-w-md bg-white h-screen shadow-2xl flex flex-col"
         >
-          {/* Drawer Header */}
           <div className="p-8 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-10">
             <div>
-              <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tight">Owner Team</h3>
+              <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tight">Owners Team</h3>
               <p className="text-[10px] font-bold text-green-600 uppercase tracking-widest mt-1">Bhai Bhai Food Products</p>
             </div>
             <button 
@@ -137,11 +160,10 @@ const [showMoreImages, setShowMoreImages] = useState(false);
             </button>
           </div>
 
-          {/* Member List Section: স্ক্রলবার ছাড়াই সব একবারে দেখাবে */}
-          <div className="flex-1 p-6 space-y-4 bg-white overflow-hidden">
+          <div className="flex-1 p-6 space-y-4 bg-white overflow-y-auto">
             {[
               { name: "Mariam Akter", role: "Managing Director", initial: "MA", color: "bg-emerald-500", phone: "8801812139217" },
-              { name: "MD. Mahmudul Hasan Shead", role: "Customers Relationship Manager", initial: "MS", color: "bg-blue-500", phone: "8801985126785" },
+              { name: "MD. Mahmudul Hasan Shead", role: "Client Relationship Manager", initial: "MS", color: "bg-blue-500", phone: "8801985126785" },
               { name: "Anwar Hossain Sojan", role: "Accounts Manager", initial: "SA", color: "bg-orange-500", phone: "8801935305068" },
               { name: "Riyad Hasan Shakil", role: "Admin Manager", initial: "RS", color: "bg-purple-500", phone: "8801968093300" }
             ].map((leader, idx) => (
@@ -174,18 +196,16 @@ const [showMoreImages, setShowMoreImages] = useState(false);
             ))}
           </div>
 
-          {/* Footer inside Drawer */}
           <div className="p-8 border-t border-gray-50 text-center bg-gray-50/30">
-             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
-              100% Purity Guaranteed 
-             </p>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
+               100% Purity Guaranteed 
+              </p>
           </div>
         </motion.div>
       </div>
     )}
   </AnimatePresence>
 </nav>
-
 
 
      {/* --- Hero Section --- */}
@@ -346,16 +366,23 @@ const [showMoreImages, setShowMoreImages] = useState(false);
           />
           
           {/* Floating High-Contrast Badge */}
-          <motion.div 
-            animate={{ y: [0, -20, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-10 right-10 bg-orange-500 text-white p-8 rounded-[2.5rem] shadow-2xl z-20 hidden md:block border-4 border-white"
-          >
-            <span className="text-5xl font-black italic block">10+</span>
-            <p className="text-[10px] uppercase font-black tracking-widest leading-tight">
-              Years of <br /> Unbroken Trust
-            </p>
-          </motion.div>
+        <motion.div 
+  animate={{ y: [0, -20, 0] }}
+  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+  className="absolute bottom-10 right-10 bg-orange-500 text-white p-6 md:p-8 rounded-[2.5 rem] shadow-2xl z-20 hidden md:flex flex-col items-start justify-center border-4 border-white"
+>
+  <span className="text-3xl md:text-4xl font-black italic leading-none mb-1">
+    Legacy
+  </span>
+  <div className="flex flex-col">
+    <p className="text-[11px] md:text-[12px] uppercase font-black tracking-[0.2em] leading-tight opacity-90">
+      of Unbroken
+    </p>
+    <p className="text-[11px] md:text-[12px] uppercase font-black tracking-[0.2em] leading-tight opacity-90">
+      Trust
+    </p>
+  </div>
+</motion.div>
         </div>
         
         {/* Background Decorative Element */}
@@ -926,19 +953,19 @@ const [showMoreImages, setShowMoreImages] = useState(false);
           {/* Employee List */}
           <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-5 bg-white scrollbar-hide">
             {[
-              { name: "Jannatul Ferdous", role: "HR Admin", exp: "11+ Years Experience", initial: "JF", gradient: "from-orange-400 to-red-500" },
-              { name: "Mehedi Hasan", role: "Quality Controller", exp: "10+ Years Experience", initial: "MH", gradient: "from-orange-400 to-red-500" },
-              { name: "Aziz Ahmed", role: "Machinery Expert", exp: "7 Years Experience", initial: "AA", gradient: "from-amber-400 to-orange-500" },
-              { name: "Rahim Khan", role: "Shift Supervisor", exp: "8 Years Experience", initial: "RK", gradient: "from-orange-500 to-orange-600" },
-              { name: "Kamrul Islam", role: "Packaging Head", exp: "5 Years Experience", initial: "KI", gradient: "from-orange-400 to-amber-500" },
-              { name: "Sujon Mia", role: "Inventory Manager", exp: "4 Years Experience", initial: "SM", gradient: "from-gray-600 to-gray-800" },
-              { name: "Abul Kashem", role: "Machine Operators.", exp: "9 Years Experience", initial: "AK", gradient: "from-sky-400 to-blue-500" },
-              { name: "Ariful Hoque", role: "Shift Supervisor", exp: "6 Years Experience", initial: "AH", gradient: "from-emerald-400 to-teal-600" },
-              { name: "Selim Reza", role: "Hygiene Inspector", exp: "5 Years Experience", initial: "SR", gradient: "from-rose-400 to-rose-500" },
-              { name: "Jasim Uddin", role: "Technical Expert", exp: "12 Years Experience", initial: "JU", gradient: "from-indigo-400 to-purple-600" },
-              { name: "Mizanur Rahman", role: "Labeling Staff", exp: "7 Years Experience", initial: "MR", gradient: "from-red-500 to-red-700" },
-              { name: "Habib Ullah", role: "Inventory Manage", exp: "6 Years Experience", initial: "HU", gradient: "from-orange-400 to-amber-500" },
-              { name: "Zubayer Ahmed", role: "Store Keeper", exp: "4 Years Experience", initial: "ZA", gradient: "from-lime-400 to-green-500" },
+              { name: "Jannatul Ferdous", role: "Office Executive", initial: "JF", gradient: "from-orange-400 to-red-500" },
+              { name: "Mehedi Hasan", role: "Quality Controller", initial: "MH", gradient: "from-orange-400 to-red-500" },
+              { name: "Aziz Ahmed", role: "Machinery Expert",  initial: "AA", gradient: "from-amber-400 to-orange-500" },
+              { name: "Rahim Khan", role: "Shift Supervisor",  initial: "RK", gradient: "from-orange-500 to-orange-600" },
+              { name: "Kamrul Islam", role: "Packaging Head",  initial: "KI", gradient: "from-orange-400 to-amber-500" },
+              { name: "Sujon Mia", role: "Inventory Manager", initial: "SM", gradient: "from-gray-600 to-gray-800" },
+              { name: "Abul Kashem", role: "Machine Operators.", initial: "AK", gradient: "from-sky-400 to-blue-500" },
+              { name: "Ariful Hoque", role: "Shift Supervisor", initial: "AH", gradient: "from-emerald-400 to-teal-600" },
+              { name: "Selim Reza", role: "Hygiene Inspector", initial: "SR", gradient: "from-rose-400 to-rose-500" },
+              { name: "Jasim Uddin", role: "Technical Expert", initial: "JU", gradient: "from-indigo-400 to-purple-600" },
+              { name: "Mizanur Rahman", role: "Labeling Staff", initial: "MR", gradient: "from-red-500 to-red-700" },
+              { name: "Habib Ullah", role: "Inventory Manage", initial: "HU", gradient: "from-orange-400 to-amber-500" },
+              { name: "Zubayer Ahmed", role: "Store Keeper", initial: "ZA", gradient: "from-lime-400 to-green-500" },
             ].map((staff, idx) => (
               <motion.div 
                 key={idx}
@@ -960,7 +987,7 @@ const [showMoreImages, setShowMoreImages] = useState(false);
                     </p>
                     <div className="flex items-center gap-1 text-gray-400">
                       <Star size={12} className="fill-amber-400 text-amber-400 border-none" />
-                      <span className="text-[10px] font-bold uppercase tracking-tight">{staff.exp}</span>
+                     
                     </div>
                   </div>
                 </div>
